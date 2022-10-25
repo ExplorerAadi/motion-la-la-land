@@ -1,3 +1,12 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer base {
+    [type="email"], [type="password"] {
+        @apply block w-full appearance-none rounded-md border border-gray-300 px-3 pt-[18px] pb-1.5 shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 placeholder-transparent text-sm;
+    }
+    [type="checkbox"] {
+        @apply h-4 w-4 rounded border-gray-300 accent-indigo-600 text-indigo-600 transition-colors duration-300 focus:ring-indigo-600
+    }
+}
