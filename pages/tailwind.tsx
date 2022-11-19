@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { classNames } from "./scroll-interactions";
+import { classNames } from "./scroll";
 
 function Tailwind() {
   return (
