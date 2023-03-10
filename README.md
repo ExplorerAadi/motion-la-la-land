@@ -1,12 +1,15 @@
-# About
+# Styling and Interactions
 
-I have created this repo to do deep dive into usecases of Tailwind for styling and micro interactions. Might add Framer Motion later to create super slick UX.
+I have created this repository to do deep dive into usecases of Tailwind for styling and framer motion for micro interactions to create slick user experiences.
 
-## How to use
+[](https://user-images.githubusercontent.com/52901335/224395766-31a5c965-3025-4369-92c8-06eab879fe27.mov)
 
-Execute `yarn` then `yarn dev` using [Yarn](https://yarnpkg.com/lang/en/docs/cli/create/), example:
+## Installation
 
 ```bash
-yarn
-yarn dev
+npm install intersection-counter
+
+yarn add intersection-counter
+
+pnpm add intersection-counter
 ```
