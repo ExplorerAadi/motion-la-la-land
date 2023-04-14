@@ -1,3 +1,5 @@
+"use client";
+
 import { motion, useCycle } from "framer-motion";
 
 const Path = (props: any) => (
