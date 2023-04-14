@@ -1,5 +1,6 @@
 import { NextPage } from "next";
 import React, { useEffect, useRef, useState } from "react";
+import { classNames } from "../utils";
 
 const ScrollInteractions: NextPage = () => {
   const [heightScrolled, setHeightScrolled] = useState(0);
@@ -179,7 +180,3 @@ const splittedImages = [
   "./row-4-column-3.jpg",
   "./row-4-column-4.jpg",
 ];
-
-export const classNames = (...classes: string[]) => {
-  return classes.filter(Boolean).join(" ");
-};

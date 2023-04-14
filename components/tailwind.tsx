@@ -1,16 +1,14 @@
 import React, { useState } from "react";
-import { classNames } from "./scroll";
+import { classNames } from "../utils";
 
-function Tailwind() {
+export const Tailwind = () => {
   return (
     <>
-      <Form />
       <ProductCard />
+      <Form />
     </>
   );
-}
-
-export default Tailwind;
+};
 
 const Form = () => {
   return (

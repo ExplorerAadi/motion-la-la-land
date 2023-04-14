@@ -1,4 +1,5 @@
 import { motion, useCycle } from "framer-motion";
+import { Tailwind } from "../components/tailwind";
 
 const Path = (props: any) => (
   <motion.path
@@ -79,4 +80,11 @@ export const HamburgerInteraction = () => {
   );
 };
 
-export default HamburgerInteraction;
+export default function Index() {
+  return (
+    <>
+      <HamburgerInteraction />
+      <Tailwind />
+    </>
+  );
+}
