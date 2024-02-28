@@ -1,9 +1,13 @@
-import HamburgerInteraction from "./hamburger";
+import { HamburgerInteraction } from "../components/hamburger";
+import { ScrollInteractions } from "../components/scroll";
+import { Tailwind } from "../components/tailwind";
 
 export default async function Index() {
   return (
-    <div>
+    <>
       <HamburgerInteraction />
-    </div>
+      <Tailwind />
+      <ScrollInteractions />
+    </>
   );
 }

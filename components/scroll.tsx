@@ -1,8 +1,9 @@
-import { NextPage } from "next";
-import React, { useEffect, useRef, useState } from "react";
+"use client";
+
+import { useEffect, useRef, useState } from "react";
 import { classNames } from "../utils";
 
-const ScrollInteractions: NextPage = () => {
+export const ScrollInteractions = () => {
   const [heightScrolled, setHeightScrolled] = useState(0);
   const scrollRef = useRef<HTMLDivElement>(null);
 
@@ -24,7 +25,6 @@ const ScrollInteractions: NextPage = () => {
 
   return (
     <div className="relative bg-white pt-3 h-screen">
-      {/* {console.log(intersectingGridArr)} */}
       <div className="bg-gray-300 w-full h-3 fixed top-0">
         <div
           className="h-full transition-all ease-linear"
@@ -153,14 +153,6 @@ const ScrollInteractions: NextPage = () => {
     </div>
   );
 };
-
-export default ScrollInteractions;
-
-// 1. Auto Drag and Drop in Grid boxes with wobbly effect like Mac - using framer
-// 2. Animate on entering viewport when scrolling from top to bottom - using framer
-// 3. Ultimate styling with tailwind using all of its features - including all the variants and new utilities
-// 4. Crazy control over DOM manipulations
-// 3. Superhuman Interactions
 
 const splittedImages = [
   "./row-1-column-1.jpg",

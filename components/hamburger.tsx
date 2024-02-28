@@ -1,5 +1,6 @@
+"use client";
+
 import { motion, useCycle } from "framer-motion";
-import { Tailwind } from "../components/tailwind";
 
 const Path = (props: any) => (
   <motion.path
@@ -79,12 +80,3 @@ export const HamburgerInteraction = () => {
     </motion.div>
   );
 };
-
-export default function Index() {
-  return (
-    <>
-      <HamburgerInteraction />
-      <Tailwind />
-    </>
-  );
-}
