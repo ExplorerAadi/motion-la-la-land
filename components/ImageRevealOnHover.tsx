@@ -1,7 +1,6 @@
 "use client";
 
 // Photos from https://citizenofnowhe.re
-import "./styles.css";
 import { useEffect, useState } from "react";
 import {
   animate,
@@ -16,7 +15,7 @@ interface Size {
   height: number;
 }
 
-function Image({ id }: { id: number }) {
+function ImageRevealOnHover({ id }: { id: number }) {
   const [size, setSize] = useState<Size | undefined>(undefined);
   const maskX = useMotionValue(0);
   const maskY = useMotionValue(0);
@@ -56,17 +55,21 @@ function Image({ id }: { id: number }) {
         }}
         style={{ WebkitMaskImage: maskImage, maskImage }}
       >
-        <img src={`/${id}.jpg`} alt="" />
+        <img
+          src={`/maybe-card.png`}
+          className="h-full w-full object-cover"
+          alt=""
+        />
       </motion.div>
     </section>
   );
 }
 
-export default function App() {
+export default function ImageRevealAnimation() {
   return (
     <>
-      {[1, 2, 3, 4, 5].map((image) => (
-        <Image id={image} />
+      {[1, 2, 3, 4, 5].map((image, idx) => (
+        <ImageRevealOnHover key={idx} id={image} />
       ))}
     </>
   );
