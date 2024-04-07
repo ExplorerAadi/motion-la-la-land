@@ -1,7 +1,7 @@
-import ImageRevealAnimation from "../components/ImageRevealOnHover";
 import { HamburgerInteraction } from "../components/hamburger";
 import { ScrollInteractions } from "../components/scroll";
 import { Tailwind } from "../components/tailwind";
+import { Homepage } from "./Homepage";
 
 import "../styles/globals.css";
 
@@ -11,7 +11,9 @@ export default async function Index() {
       {/* <HamburgerInteraction /> */}
       {/* <Tailwind /> */}
       {/* <ScrollInteractions /> */}
-      <ImageRevealAnimation />
+      <div className="flex items-center justify-center p-4 h-screen">
+        <Homepage />
+      </div>
     </>
   );
 }
