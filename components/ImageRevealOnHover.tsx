@@ -15,7 +15,7 @@ interface Size {
   height: number;
 }
 
-function ImageRevealOnHover({ id }: { id: number }) {
+export const ImageRevealOnHover = () => {
   const [size, setSize] = useState<Size | undefined>(undefined);
   const maskX = useMotionValue(0);
   const maskY = useMotionValue(0);
@@ -63,14 +63,4 @@ function ImageRevealOnHover({ id }: { id: number }) {
       </motion.div>
     </section>
   );
-}
-
-export default function ImageRevealAnimation() {
-  return (
-    <>
-      {[1, 2, 3, 4, 5].map((image, idx) => (
-        <ImageRevealOnHover key={idx} id={image} />
-      ))}
-    </>
-  );
-}
+};
