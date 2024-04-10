@@ -2,7 +2,7 @@
 
 import { motion, useMotionValue, useTransform } from "framer-motion";
 
-export function Example() {
+export const MouseTracking = () => {
   const x = useMotionValue(200);
   const y = useMotionValue(200);
 
@@ -19,13 +19,12 @@ export function Example() {
   return (
     <motion.div
       style={{
-        width: 400,
-        height: 400,
+        width: "100%",
+        height: "100vh",
         display: "flex",
         placeItems: "center",
         placeContent: "center",
-        borderRadius: 30,
-        backgroundColor: "rgba(255, 255, 255, 0.05)",
+        backgroundColor: "#000",
         perspective: 400,
       }}
       onMouseMove={handleMouse}
@@ -35,11 +34,11 @@ export function Example() {
           width: 150,
           height: 150,
           borderRadius: 30,
-          backgroundColor: "#fff",
+          backgroundColor: "#7A71E1",
           rotateX,
           rotateY,
         }}
       />
     </motion.div>
   );
-}
+};
