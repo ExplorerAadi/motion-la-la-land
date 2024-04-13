@@ -1,5 +1,5 @@
-import { MouseTracking } from "../../components/MouseTracking";
+import { FollowCursor } from "../../components/MouseTracking";
 
 export default function page() {
-  return <MouseTracking />;
+  return <FollowCursor />;
 }
