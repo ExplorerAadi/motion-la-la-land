@@ -73,15 +73,15 @@ export const FollowCursor = () => {
             setIsHovered(false);
           }}
         >
-          A visual designer - with skills that haven't been replaced by A.I
-          (yet) - making good shit only if the paycheck is equally good.
+          A software engineer - with skills that haven't been replaced by A.I
+          (yet) - making good shit without compromising on making money.
         </p>
       </motion.div>
       <div className="h-full w-full flex items-center justify-center">
         <p className="text-6xl w-2/3 text-[#afa18f]">
-          I'm a <span className="text-[#ec4e39]">selectively skilled</span>{" "}
-          product designer with strong focus on producing high quality &
-          impactful digital experience.
+          I've been <span className="text-[#ec4e39]">the frontend guy</span> ,
+          always trying to be at the intersection of business, product and
+          engineering.
         </p>
       </div>
     </main>
