@@ -1,6 +1,8 @@
 "use client";
 
 import { motion, useMotionValue, useTransform } from "framer-motion";
+import { useMousePosition } from "../utils";
+import { useState } from "react";
 
 export const MouseTracking = () => {
   const x = useMotionValue(200);
@@ -40,5 +42,48 @@ export const MouseTracking = () => {
         }}
       />
     </motion.div>
+  );
+};
+
+export const FollowCursor = () => {
+  const [isHovered, setIsHovered] = useState(false);
+  const { x, y } = useMousePosition();
+  const size = isHovered ? 400 : 40;
+
+  return (
+    <main className="h-screen w-full bg-black">
+      <motion.div
+        className="follow-cursor-mask h-full w-full flex items-center justify-center text-6xl absolute bg-[#ec4e39] text-black"
+        style={{
+          maskImage: 'url("/mask.svg")',
+          maskRepeat: "no-repeat",
+        }}
+        animate={{
+          WebkitMaskPosition: `${x - size / 2}px ${y - size / 2}px`,
+          WebkitMaskSize: `${size}px`,
+        }}
+        transition={{ type: "tween", ease: "backOut", duration: 0.5 }}
+      >
+        <p
+          className="text-6xl w-2/3"
+          onMouseEnter={() => {
+            setIsHovered(true);
+          }}
+          onMouseLeave={() => {
+            setIsHovered(false);
+          }}
+        >
+          A software engineer - with skills that haven't been replaced by A.I
+          (yet) - making good shit without compromising on making money.
+        </p>
+      </motion.div>
+      <div className="h-full w-full flex items-center justify-center">
+        <p className="text-6xl w-2/3 text-[#afa18f]">
+          I've been <span className="text-[#ec4e39]">the frontend guy</span> ,
+          always trying to be at the intersection of business, product and
+          engineering.
+        </p>
+      </div>
+    </main>
   );
 };
