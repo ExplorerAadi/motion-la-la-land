@@ -1,10 +1,12 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { ClassValue, clsx } from "clsx";
+import { twMerge } from "tailwind-merge";
 
-export const classNames = (...classes: string[]) => {
-  return classes.filter(Boolean).join(" ");
-};
+export function classNames(...inputs: ClassValue[]) {
+  return twMerge(clsx(inputs));
+}
 
 export const useMousePosition = () => {
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
