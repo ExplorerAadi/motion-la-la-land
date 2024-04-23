@@ -1,6 +1,5 @@
 {
-  "name": "styling-and-interactions",
-  "private": true,
+  "name": "motion-la-la-land",
   "scripts": {
     "dev": "next dev",
     "build": "next build",
