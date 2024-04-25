@@ -1,7 +1,7 @@
-# Styling and Interactions
+# Motion La La Land
 
-I have created this repository to do deep dive into framer motion to create slick user experiences.
-Do check them out by following this [link](https://styling-and-interactions.vercel.app).
+An ever-growing set of polished animating components, leveraging the best of framer motion and inspired from across the web.
+Do check them out by following this [link](https://motion-la-la-land.vercel.app).
 
 ## Installation
 
