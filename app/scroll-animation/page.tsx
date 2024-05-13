@@ -1,39 +1,12 @@
 // Photos from https://citizenofnowhe.re
 import "./styles.css";
-import { useState } from "react";
-import { motion } from "framer-motion";
+import { ScrollAnimation } from "../../components/ScrollAnimation";
 
-const hiddenMask = `repeating-linear-gradient(to right, rgba(0,0,0,0) 0px, rgba(0,0,0,0) 30px, rgba(0,0,0,1) 30px, rgba(0,0,0,1) 30px)`;
-const visibleMask = `repeating-linear-gradient(to right, rgba(0,0,0,0) 0px, rgba(0,0,0,0) 0px, rgba(0,0,0,1) 0px, rgba(0,0,0,1) 30px)`;
-
-function Image({ id }: { id: number }) {
-  const [isLoaded, setIsLoaded] = useState(false);
-  const [isInView, setIsInView] = useState(false);
-
-  return (
-    <div>
-      <motion.div
-        initial={false}
-        animate={
-          isLoaded && isInView
-            ? { WebkitMaskImage: visibleMask, maskImage: visibleMask }
-            : { WebkitMaskImage: hiddenMask, maskImage: hiddenMask }
-        }
-        transition={{ duration: 1, delay: 1 }}
-        viewport={{ once: true }}
-        onViewportEnter={() => setIsInView(true)}
-      >
-        <img src={`/${id}.jpg`} alt="" onLoad={() => setIsLoaded(true)} />
-      </motion.div>
-    </div>
-  );
-}
-
-export default function App() {
+export default function ScrollAnimationPage() {
   return (
     <>
       {[1, 2, 3, 4, 5].map((image) => (
-        <Image id={image} />
+        <ScrollAnimation id={image} />
       ))}
     </>
   );
