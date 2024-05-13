@@ -1,5 +1,3 @@
-// Photos from https://citizenofnowhe.re
-import "./styles.css";
 import { ScrollAnimation } from "../../components/ScrollAnimation";
 
 export default function ScrollAnimationPage() {
