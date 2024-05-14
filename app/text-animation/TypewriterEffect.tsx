@@ -39,7 +39,7 @@ export const TypewriterEffect = ({
           duration: 0.3,
           delay: stagger(0.1),
           ease: "easeInOut",
-        }
+        },
       );
     }
   }, [isInView]);
@@ -56,7 +56,7 @@ export const TypewriterEffect = ({
                   key={`char-${index}`}
                   className={classNames(
                     `dark:text-white text-black opacity-0 hidden`,
-                    word.className
+                    word.className,
                   )}
                 >
                   {char}
@@ -73,7 +73,7 @@ export const TypewriterEffect = ({
     <div
       className={classNames(
         "text-base sm:text-xl md:text-3xl lg:text-5xl font-bold text-center",
-        className
+        className,
       )}
     >
       {renderWords()}
@@ -91,7 +91,7 @@ export const TypewriterEffect = ({
         }}
         className={classNames(
           "inline-block rounded-sm w-[4px] h-4 md:h-6 lg:h-10 bg-blue-500",
-          cursorClassName
+          cursorClassName,
         )}
       ></motion.span>
     </div>
@@ -128,7 +128,7 @@ export const TypewriterEffectSmooth = ({
                   key={`char-${index}`}
                   className={classNames(
                     `dark:text-white text-black `,
-                    word.className
+                    word.className,
                   )}
                 >
                   {char}
@@ -182,7 +182,7 @@ export const TypewriterEffectSmooth = ({
         }}
         className={classNames(
           "block rounded-sm w-[4px]  h-4 sm:h-6 xl:h-12 bg-blue-500",
-          cursorClassName
+          cursorClassName,
         )}
       ></motion.span>
     </div>

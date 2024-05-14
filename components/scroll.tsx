@@ -120,7 +120,7 @@ export const ScrollInteractions = () => {
           </p>
           <div
             className={classNames(
-              "grid grid-cols-4 grid-rows-4 rounded-md h-[600px] w-full overflow-hidden border"
+              "grid grid-cols-4 grid-rows-4 rounded-md h-[600px] w-full overflow-hidden border",
             )}
           >
             {splittedImages.map((url, index) => (

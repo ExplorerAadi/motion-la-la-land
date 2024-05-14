@@ -123,7 +123,7 @@ const ProductCard = () => {
     <div
       className={classNames(
         "h-screen relative group flex items-center bg-gray-50",
-        selectedColor
+        selectedColor,
       )}
     >
       <div className="h-full sm:w-[375px] sm:mx-auto sm:h-[860px] sm:rounded-md sm:shadow-lg sm:overflow-hidden">
@@ -178,11 +178,11 @@ const ProductCard = () => {
                         : "",
                       color === "blackTheme"
                         ? "bg-gray-700 peer-checked:ring-gray-700"
-                        : ""
+                        : "",
                     )}
                   ></label>
                 </div>
-              )
+              ),
             )}
           </div>
           <div className="flex items-center justify-between mt-10">

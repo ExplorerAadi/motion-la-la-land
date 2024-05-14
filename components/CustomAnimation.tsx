@@ -32,7 +32,7 @@ const Basic = () => {
       },
       {
         duration: 0.5,
-      }
+      },
     );
     await animate("div", {
       x: 0,
