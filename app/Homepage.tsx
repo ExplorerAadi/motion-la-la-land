@@ -12,6 +12,7 @@ export const Homepage = () => {
         <RedirectLink label="Custom Animation" href="/custom-animation" />
         <RedirectLink label="Stateless Animation" href="/stateless-animation" />
         <RedirectLink label="Mouse Tracking" href="/mouse-tracking" />
+        <RedirectLink label="Smart Navbar" href="/smart-navbar" />
       </div>
     </div>
   );
