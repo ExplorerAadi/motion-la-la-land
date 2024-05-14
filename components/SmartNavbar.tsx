@@ -1,31 +1,37 @@
 "use client";
 
-import React, { useState } from "react";
-import { AnimatePresence, motion, useMotionValueEvent, useScroll } from "framer-motion";
+import { useState } from "react";
+import {
+  AnimatePresence,
+  motion,
+  useMotionValueEvent,
+  useScroll,
+} from "framer-motion";
 import Link from "next/link";
 import { classNames } from "../utils";
 
+const navItems = [
+  {
+    name: "Home",
+    link: "/",
+  },
+  {
+    name: "About",
+    link: "/about",
+  },
+  {
+    name: "Contact",
+    link: "/contact",
+  },
+];
+
 export const SmartNavbar = () => {
-  const navItems = [
-    {
-      name: "Home",
-      link: "/",
-    },
-    {
-      name: "About",
-      link: "/about",
-    },
-    {
-      name: "Contact",
-      link: "/contact",
-    },
-  ];
   return (
     <div className="relative w-full">
       <FloatingNav navItems={navItems} />
     </div>
   );
-}
+};
 
 export const FloatingNav = ({
   navItems,
@@ -97,7 +103,6 @@ export const FloatingNav = ({
     </AnimatePresence>
   );
 };
-
 
 // Sticky navbar that only shows when scrolled up or when scrolled till the top
 // Another navbar like container to show the current content section and gets hidden when the actual navbar shows up
