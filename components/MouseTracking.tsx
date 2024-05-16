@@ -1,7 +1,7 @@
 "use client";
 
 import { motion, useMotionValue, useTransform } from "framer-motion";
-import { useMousePosition } from "../utils";
+import { useMousePosition } from "../hooks";
 import { useState } from "react";
 
 export const MouseTracking = () => {
