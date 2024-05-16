@@ -34,6 +34,8 @@ const navItems = [
   },
 ];
 
+const colors = ["bg-violet-300", "bg-pink-300", "bg-blue-300", "bg-orange-300"];
+
 export const SmartNavbar = () => {
   return (
     <div className="relative w-full">
@@ -111,9 +113,15 @@ export const FloatingContainers = () => {
 
   return (
     <div>
-      {["bg-violet-300", "bg-pink-300", "bg-blue-300", "bg-orange-300"].map(
+      {colors.map(
         (color, index) => (
-          <Container bgColor={color} hideStickyHeader={index === 0} isVisible={isVisible} setIsVisible={setIsVisible} index={index} />
+          <Container
+            bgColor={color}
+            lastIndex={colors.length - 1}
+            currentIndex={index}
+            isVisible={isVisible}
+            setIsVisible={setIsVisible}
+          />
         )
       )}
     </div>
@@ -121,39 +129,49 @@ export const FloatingContainers = () => {
 };
 
 const Container = ({
+  bgColor,
+  lastIndex,
+  currentIndex,
   isVisible,
   setIsVisible,
-  index,
-  bgColor,
-  hideStickyHeader,
 }: {
+  bgColor: string;
+  lastIndex: number;
+  currentIndex: number;
   isVisible: number;
   setIsVisible: (value: number) => void;
-  index: number;
-  bgColor: string;
-  hideStickyHeader?: boolean;
 }) => {
-  const { ref, inView } = useInView({ threshold: 0.7 });
-  console.log(isVisible, index, inView)
+  const { ref, inView } = useInView({ threshold: 0.01 });
+  const isFirstIndex = currentIndex === 0;
 
   useEffect(() => {
-    if (inView && index < (isVisible + 1)) {
-      setIsVisible(index);
-    } else if (!inView && isVisible === index) {
+    if (inView && isVisible !== currentIndex) {
+      setIsVisible(currentIndex);
+    } else if (!inView && isVisible === currentIndex) {
       setIsVisible(0);
     }
-  }, [inView, index])
+  }, [inView, currentIndex]);
 
   return (
     <div ref={ref} className={classNames("h-screen w-full", bgColor)}>
-      {!hideStickyHeader && (
-        <div
+      {!isFirstIndex && (
+        <motion.div
+          initial={{
+            opacity: 1,
+            y: -100,
+          }}
+          animate={{
+            y: isVisible === currentIndex + 1 && currentIndex + 1 !== lastIndex ? 0 : -100,
+            opacity: isVisible === currentIndex + 1 && currentIndex + 1 !== lastIndex ? 1 : 0,
+          }}
+          transition={{
+            duration: 0.2,
+          }}
           className={classNames(
-            "h-20 border-b border-b-white w-full",
-            bgColor,
-            isVisible === index ? "fixed top-0" : ""
+            "h-20 border-b border-b-white w-full fixed top-0",
+            bgColor
           )}
-        ></div>
+        ></motion.div>
       )}
     </div>
   );
