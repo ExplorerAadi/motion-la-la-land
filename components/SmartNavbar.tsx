@@ -161,8 +161,8 @@ const Container = ({
             y: -100,
           }}
           animate={{
-            y: isVisible === currentIndex + 1 && currentIndex + 1 !== lastIndex ? 0 : -100,
-            opacity: isVisible === currentIndex + 1 && currentIndex + 1 !== lastIndex ? 1 : 0,
+            y: isVisible === currentIndex + 1 ? 0 : -100,
+            opacity: isVisible === currentIndex + 1 ? 1 : 0,
           }}
           transition={{
             duration: 0.2,
@@ -177,6 +177,4 @@ const Container = ({
   );
 };
 
-// Sticky navbar that only shows when scrolled up or when scrolled till the top
-// Another navbar like container to show the current content section and gets hidden when the actual navbar shows up
 // Calculate the offset of current container in viewport from the top of window and when it nears 0, attach the fixed class to it and remove the previous node's fixed class.
