@@ -20,14 +20,37 @@ export const useMousePosition = () => {
   return mousePosition;
 };
 
-export const useDimensions = () => {
-  const ref = useRef<HTMLElement>(null);
-  const [dimensions, setDimensions] = useState({ width: 0, height: 0 });
+export const useOffsets = () => {
+  const ref = useRef<HTMLDivElement>(null);
+  const [offsets, setOffsets] = useState({ offsetTop: 0, offsetLeft: 0 });
   useLayoutEffect(() => {
     if (ref.current) {
-      setDimensions(ref.current.getBoundingClientRect().toJSON());
+      setOffsets({
+        offsetTop: ref.current.offsetTop,
+        offsetLeft: ref.current.offsetLeft,
+      });
     }
+
+    window.addEventListener("resize", () => {
+      if (ref.current) {
+        setOffsets({
+          offsetTop: ref.current.offsetTop,
+          offsetLeft: ref.current.offsetLeft,
+        });
+      }
+    });
+
+    return () => {
+      window.removeEventListener("resize", () => {
+        if (ref.current) {
+          setOffsets({
+            offsetTop: ref.current.offsetTop,
+            offsetLeft: ref.current.offsetLeft,
+          });
+        }
+      });
+    };
   }, [ref.current]);
 
-  return [ref, dimensions];
+  return { ref, offsets };
 };

@@ -7,9 +7,9 @@ import {
   useMotionValueEvent,
   useScroll,
 } from "framer-motion";
-import { useInView } from "react-intersection-observer";
 import Link from "next/link";
 import { classNames } from "../utils";
+import { useOffsets } from "../hooks";
 
 const navItems = [
   {
@@ -62,7 +62,7 @@ export const FloatingNav = ({
 
   useMotionValueEvent(scrollYProgress, "change", (current) => {
     if (typeof current === "number") {
-      let direction = current! - scrollYProgress.getPrevious()!;
+      const direction = current! - scrollYProgress.getPrevious()!;
 
       if (direction < 0) {
         setVisible(true);
@@ -109,51 +109,63 @@ export const FloatingNav = ({
 };
 
 export const FloatingContainers = () => {
-  const [isVisible, setIsVisible] = useState(0);
+  const [visibleIdx, setVisibleIdx] = useState(0);
+  const [allOffsetTops, setAllOffsetTops] = useState<number[]>([]);
+  const { scrollY } = useScroll();
+  useMotionValueEvent(scrollY, "change", (current) => {
+    if (typeof current === "number") {
+      const direction = current! - scrollY.getPrevious()!;
+
+      if (direction > 0) {
+        if (current >= allOffsetTops[0] && current < allOffsetTops[1]) {
+          setVisibleIdx(1);
+        } else if (current >= allOffsetTops[1] && current < allOffsetTops[2]) {
+          setVisibleIdx(2);
+        } else if (current >= allOffsetTops[2]) {
+          setVisibleIdx(3);
+        } else setVisibleIdx(0);
+      }
+    }
+  });
 
   return (
     <div>
-      {colors.map(
-        (color, index) => (
-          <Container
-            bgColor={color}
-            lastIndex={colors.length - 1}
-            currentIndex={index}
-            isVisible={isVisible}
-            setIsVisible={setIsVisible}
-          />
-        )
-      )}
+      {colors.map((color, index) => (
+        <Container
+          bgColor={color}
+          currentIndex={index}
+          isVisible={visibleIdx === index}
+          setAllOffsetTops={setAllOffsetTops}
+        />
+      ))}
+      <div className="h-screen / 2 bg-gray-200"></div>
     </div>
   );
 };
 
 const Container = ({
   bgColor,
-  lastIndex,
   currentIndex,
   isVisible,
-  setIsVisible,
+  setAllOffsetTops,
 }: {
   bgColor: string;
-  lastIndex: number;
   currentIndex: number;
-  isVisible: number;
-  setIsVisible: (value: number) => void;
+  isVisible: boolean;
+  setAllOffsetTops: (value: number[]) => void;
 }) => {
-  const { ref, inView } = useInView({ threshold: 0.01 });
   const isFirstIndex = currentIndex === 0;
+  const { ref, offsets } = useOffsets();
 
   useEffect(() => {
-    if (inView && isVisible !== currentIndex) {
-      setIsVisible(currentIndex);
-    } else if (!inView && isVisible === currentIndex) {
-      setIsVisible(0);
+    if (ref.current && offsets.offsetTop !== 0) {
+      // @ts-expect-error
+      setAllOffsetTops((prev: number[]) => [...prev, offsets.offsetTop]);
     }
-  }, [inView, currentIndex]);
+  }, [ref.current]);
 
   return (
-    <div ref={ref} className={classNames("h-screen w-full", bgColor)}>
+    <motion.div ref={ref} className={classNames("h-screen w-full", bgColor)}>
       {!isFirstIndex && (
         <motion.div
           initial={{
@@ -161,8 +173,8 @@ const Container = ({
             y: -100,
           }}
           animate={{
-            y: isVisible === currentIndex + 1 ? 0 : -100,
-            opacity: isVisible === currentIndex + 1 ? 1 : 0,
+            y: isVisible ? 0 : -100,
+            opacity: isVisible ? 1 : 0,
           }}
           transition={{
             duration: 0.2,
@@ -173,7 +185,7 @@ const Container = ({
           )}
         ></motion.div>
       )}
-    </div>
+    </motion.div>
   );
 };
 
