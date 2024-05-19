@@ -118,7 +118,11 @@ export const FloatingContainers = () => {
 
       if (direction > 0) {
         allOffsetTopsArr.forEach((offset, idx) => {
-          if (idx === 0 && current >= 90 && current < allOffsetTopsArr[idx + 1]) {
+          if (
+            idx === 0 &&
+            current >= 90 &&
+            current < allOffsetTopsArr[idx + 1]
+          ) {
             setVisibleIdx(idx);
           } else if (current >= offset && current < allOffsetTopsArr[idx + 1]) {
             setVisibleIdx(idx);
@@ -142,7 +146,7 @@ export const FloatingContainers = () => {
           setAllOffsetTops={setAllOffsetTops}
         />
       ))}
-      <div className="h-screen / 2 bg-gray-200"></div>
+      <div className="h-32 bg-gray-100"></div>
     </div>
   );
 };
