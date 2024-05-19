@@ -19,15 +19,3 @@ export const useMousePosition = () => {
 
   return mousePosition;
 };
-
-export const useDimensions = () => {
-  const ref = useRef<HTMLElement>(null);
-  const [dimensions, setDimensions] = useState({ width: 0, height: 0 });
-  useLayoutEffect(() => {
-    if (ref.current) {
-      setDimensions(ref.current.getBoundingClientRect().toJSON());
-    }
-  }, [ref.current]);
-
-  return [ref, dimensions];
-};

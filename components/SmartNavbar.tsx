@@ -1,13 +1,12 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import {
   AnimatePresence,
   motion,
   useMotionValueEvent,
   useScroll,
 } from "framer-motion";
-import { useInView } from "react-intersection-observer";
 import Link from "next/link";
 import { classNames } from "../utils";
 
@@ -62,7 +61,7 @@ export const FloatingNav = ({
 
   useMotionValueEvent(scrollYProgress, "change", (current) => {
     if (typeof current === "number") {
-      let direction = current! - scrollYProgress.getPrevious()!;
+      const direction = current! - scrollYProgress.getPrevious()!;
 
       if (direction < 0) {
         setVisible(true);
@@ -109,74 +108,88 @@ export const FloatingNav = ({
 };
 
 export const FloatingContainers = () => {
-  const [isVisible, setIsVisible] = useState(0);
+  const [visibleIdx, setVisibleIdx] = useState(-1);
+  const [allOffsetTops, setAllOffsetTops] = useState<Set<number>>(new Set());
+  const { scrollY } = useScroll();
+  useMotionValueEvent(scrollY, "change", (current) => {
+    if (typeof current === "number") {
+      const direction = current! - scrollY.getPrevious()!;
+      const allOffsetTopsArr = Array.from(allOffsetTops!);
+
+      if (direction > 0) {
+        allOffsetTopsArr.forEach((offset, idx) => {
+          if (
+            idx === 0 &&
+            current >= 90 &&
+            current < allOffsetTopsArr[idx + 1]
+          ) {
+            setVisibleIdx(idx);
+          } else if (current >= offset && current < allOffsetTopsArr[idx + 1]) {
+            setVisibleIdx(idx);
+          } else if (current >= offset && idx === allOffsetTopsArr.length - 1) {
+            setVisibleIdx(idx);
+          }
+        });
+      } else {
+        setVisibleIdx(-1);
+      }
+    }
+  });
 
   return (
     <div>
-      {colors.map(
-        (color, index) => (
-          <Container
-            bgColor={color}
-            lastIndex={colors.length - 1}
-            currentIndex={index}
-            isVisible={isVisible}
-            setIsVisible={setIsVisible}
-          />
-        )
-      )}
+      {colors.map((color, index) => (
+        <Container
+          bgColor={color}
+          isVisible={visibleIdx === index}
+          allOffsetTops={allOffsetTops}
+          setAllOffsetTops={setAllOffsetTops}
+        />
+      ))}
+      <div className="h-32 bg-gray-100"></div>
     </div>
   );
 };
 
 const Container = ({
   bgColor,
-  lastIndex,
-  currentIndex,
   isVisible,
-  setIsVisible,
+  allOffsetTops,
+  setAllOffsetTops,
 }: {
   bgColor: string;
-  lastIndex: number;
-  currentIndex: number;
-  isVisible: number;
-  setIsVisible: (value: number) => void;
+  isVisible: boolean;
+  allOffsetTops: Set<number>;
+  setAllOffsetTops: (value: Set<number>) => void;
 }) => {
-  const { ref, inView } = useInView({ threshold: 0.01 });
-  const isFirstIndex = currentIndex === 0;
+  const ref = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    if (inView && isVisible !== currentIndex) {
-      setIsVisible(currentIndex);
-    } else if (!inView && isVisible === currentIndex) {
-      setIsVisible(0);
+    if (ref.current) {
+      console.log(ref.current.offsetTop);
+      setAllOffsetTops(allOffsetTops.add(ref.current.offsetTop));
     }
-  }, [inView, currentIndex]);
+  }, [ref.current]);
 
   return (
-    <div ref={ref} className={classNames("h-screen w-full", bgColor)}>
-      {!isFirstIndex && (
-        <motion.div
-          initial={{
-            opacity: 1,
-            y: -100,
-          }}
-          animate={{
-            y: isVisible === currentIndex + 1 && currentIndex + 1 !== lastIndex ? 0 : -100,
-            opacity: isVisible === currentIndex + 1 && currentIndex + 1 !== lastIndex ? 1 : 0,
-          }}
-          transition={{
-            duration: 0.2,
-          }}
-          className={classNames(
-            "h-20 border-b border-b-white w-full fixed top-0",
-            bgColor
-          )}
-        ></motion.div>
-      )}
-    </div>
+    <motion.div ref={ref} className={classNames("h-screen w-full", bgColor)}>
+      <motion.div
+        initial={{
+          opacity: 1,
+          y: -100,
+        }}
+        animate={{
+          y: isVisible ? 0 : -100,
+          opacity: isVisible ? 1 : 0,
+        }}
+        transition={{
+          duration: 0.2,
+        }}
+        className={classNames(
+          "h-20 border-b border-b-white w-full fixed top-0",
+          bgColor
+        )}
+      ></motion.div>
+    </motion.div>
   );
 };
-
-// Sticky navbar that only shows when scrolled up or when scrolled till the top
-// Another navbar like container to show the current content section and gets hidden when the actual navbar shows up
-// Calculate the offset of current container in viewport from the top of window and when it nears 0, attach the fixed class to it and remove the previous node's fixed class.
