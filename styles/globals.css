@@ -35,6 +35,10 @@ body {
   color: var(--accent);
 }
 
+th, td {
+  padding: 8px;
+}
+
 .progress {
   position: fixed;
   left: 0;
