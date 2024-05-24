@@ -9,6 +9,7 @@ import {
 } from "framer-motion";
 import Link from "next/link";
 import { classNames } from "../utils";
+import { BlogContent } from "./DummyContent";
 
 const navItems = [
   {
@@ -37,7 +38,7 @@ const colors = ["bg-violet-300", "bg-pink-300", "bg-blue-300", "bg-orange-300"];
 
 export const SmartNavbar = () => {
   return (
-    <div className="relative w-full">
+    <div className="relative w-full bg-black/90">
       <FloatingNav navItems={navItems} />
       <FloatingContainers />
     </div>
@@ -86,7 +87,7 @@ export const FloatingNav = ({
           duration: 0.2,
         }}
         className={classNames(
-          "flex max-w-fit fixed top-10 inset-x-0 mx-auto border border-transparent dark:border-white/[0.2] rounded-full dark:bg-black bg-white z-[5000] px-12 py-4 items-center justify-center space-x-4",
+          "flex max-w-fit fixed top-10 inset-x-0 mx-auto border border-white/[0.2] rounded-full bg-black z-[5000] px-12 py-4 items-center justify-center space-x-4",
           className
         )}
       >
@@ -95,7 +96,7 @@ export const FloatingNav = ({
             key={`link=${idx}`}
             href={navItem.link}
             className={classNames(
-              "relative dark:text-neutral-50 items-center flex space-x-1 text-neutral-600 dark:hover:text-neutral-300 hover:text-neutral-500"
+              "relative text-neutral-50 items-center flex space-x-1 hover:text-neutral-300"
             )}
           >
             <span className="block sm:hidden">{navItem.icon}</span>
@@ -108,88 +109,40 @@ export const FloatingNav = ({
 };
 
 export const FloatingContainers = () => {
-  const [visibleIdx, setVisibleIdx] = useState(-1);
-  const [allOffsetTops, setAllOffsetTops] = useState<Set<number>>(new Set());
   const { scrollY } = useScroll();
+  const headingsRef = useRef<any[]>([]);
+
   useMotionValueEvent(scrollY, "change", (current) => {
     if (typeof current === "number") {
       const direction = current! - scrollY.getPrevious()!;
-      const allOffsetTopsArr = Array.from(allOffsetTops!);
 
-      if (direction > 0) {
-        allOffsetTopsArr.forEach((offset, idx) => {
+      headingsRef.current?.forEach((el, idx) => {
+        if (direction > 0) {
           if (
-            idx === 0 &&
-            current >= 90 &&
-            current < allOffsetTopsArr[idx + 1]
+            current >= el.offsetTop &&
+            ((idx < headingsRef.current.length - 1 &&
+              current < headingsRef.current[idx + 1].offsetTop) ||
+              idx === headingsRef.current.length - 1)
           ) {
-            setVisibleIdx(idx);
-          } else if (current >= offset && current < allOffsetTopsArr[idx + 1]) {
-            setVisibleIdx(idx);
-          } else if (current >= offset && idx === allOffsetTopsArr.length - 1) {
-            setVisibleIdx(idx);
+            el.classList.add("stick");
           }
-        });
-      } else {
-        setVisibleIdx(-1);
-      }
+        } else {
+          el.classList.remove("stick");
+        }
+      });
     }
   });
 
-  return (
-    <div>
-      {colors.map((color, index) => (
-        <Container
-          bgColor={color}
-          isVisible={visibleIdx === index}
-          allOffsetTops={allOffsetTops}
-          setAllOffsetTops={setAllOffsetTops}
-        />
-      ))}
-      <div className="h-32 bg-gray-100"></div>
-    </div>
-  );
-};
-
-const Container = ({
-  bgColor,
-  isVisible,
-  allOffsetTops,
-  setAllOffsetTops,
-}: {
-  bgColor: string;
-  isVisible: boolean;
-  allOffsetTops: Set<number>;
-  setAllOffsetTops: (value: Set<number>) => void;
-}) => {
-  const ref = useRef<HTMLDivElement>(null);
-
   useEffect(() => {
-    if (ref.current) {
-      console.log(ref.current.offsetTop);
-      setAllOffsetTops(allOffsetTops.add(ref.current.offsetTop));
-    }
-  }, [ref.current]);
+    const allH1s = document.querySelectorAll("h1");
+    const allH2s = document.querySelectorAll("h2");
+    const allHeadingsArr = Array.from(allH1s).concat(Array.from(allH2s));
+    headingsRef.current = allHeadingsArr;
+  }, []);
 
   return (
-    <motion.div ref={ref} className={classNames("h-screen w-full", bgColor)}>
-      <motion.div
-        initial={{
-          opacity: 1,
-          y: -100,
-        }}
-        animate={{
-          y: isVisible ? 0 : -100,
-          opacity: isVisible ? 1 : 0,
-        }}
-        transition={{
-          duration: 0.2,
-        }}
-        className={classNames(
-          "h-20 border-b border-b-white w-full fixed top-0",
-          bgColor
-        )}
-      ></motion.div>
-    </motion.div>
+    <div className="pt-16 bg-black/90">
+      <BlogContent />
+    </div>
   );
 };
