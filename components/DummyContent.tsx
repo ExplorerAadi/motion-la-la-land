@@ -1,9 +1,9 @@
 export const BlogContent = () => {
     return (
-      <div className="pt-8 pb-16 lg:pt-16 lg:pb-24 bg-gray-900 antialiased">
-        <div className="flex justify-between px-4 mx-auto max-w-screen-xl ">
-          <article className="mx-auto w-full max-w-2xl text-gray-600 space-y-4 lg:space-y-6">
-            <h1 className="text-3xl font-extrabold leading-tight lg:text-4xl text-white top-0">
+      <div className="pt-8 pb-16 lg:pt-16 lg:pb-24 bg-black/90 antialiased">
+        <div className="flex justify-between px-4 mx-auto max-w-4xl ">
+          <article className="w-full text-gray-600 space-y-6">
+            <h1 className="font-extrabold text-4xl text-white">
               Best practices for successful prototypes
             </h1>
             <p className="lead">
@@ -97,7 +97,7 @@ export const BlogContent = () => {
               conveniently built with the utility classes from Tailwind CSS.
             </p>
   
-            <h2 className="text-4xl font-bold text-white top-0">
+            <h2 className="text-3xl font-bold text-white">
               Getting started with Flowbite
             </h2>
             <p>
@@ -130,7 +130,7 @@ export const BlogContent = () => {
               to better understand the differences between the open-source and pro
               version of Flowbite.
             </p>
-            <h2 className="text-4xl font-bold text-white top-0">
+            <h2 className="text-3xl font-bold text-white">
               When does design come in handy?
             </h2>
             <p>
@@ -202,7 +202,7 @@ export const BlogContent = () => {
               </li>
             </ol>
   
-            <h3 className="text-3xl font-bold text-white">
+            <h3 className="text-2xl font-bold text-white">
               Laying the groundwork for best design
             </h3>
             <p>
@@ -215,24 +215,24 @@ export const BlogContent = () => {
               tag of your HTML.
             </p>
   
-            <h3 className="text-3xl font-bold text-white">
+            <h3 className="text-2xl font-bold text-white">
               Understanding typography
             </h3>
   
-            <h4 className="text-2xl font-bold text-white">Type properties</h4>
+            <h4 className="text-xl font-bold text-white">Type properties</h4>
             <p>
               A typeface is a collection of letters. While each letter is unique,
               certain shapes are shared across letters. A typeface represents
               shared patterns across a collection of letters.
             </p>
   
-            <h4 className="text-2xl font-bold text-white">Baseline</h4>
+            <h4 className="text-xl font-bold text-white">Baseline</h4>
             <p>
               A typeface is a collection of letters. While each letter is unique,
               certain shapes are shared across letters. A typeface represents
               shared patterns across a collection of letters.
             </p>
-            <h4 className="text-2xl font-bold text-white">
+            <h4 className="text-xl font-bold text-white">
               Measurement from the baseline
             </h4>
             <p>
@@ -241,14 +241,14 @@ export const BlogContent = () => {
               shared patterns across a collection of letters.
             </p>
   
-            <h3 className="text-3xl font-bold text-white">Type classification</h3>
-            <h4 className="text-2xl font-bold text-white">Serif</h4>
+            <h3 className="text-2xl font-bold text-white">Type classification</h3>
+            <h4 className="text-xl font-bold text-white">Serif</h4>
             <p>
               A serif is a small shape or projection that appears at the beginning
               or end of a stroke on a letter. Typefaces with serifs are called
               serif typefaces. Serif fonts are classified as one of the following:
             </p>
-            <h4 className="text-2xl font-bold text-white">Old-Style serifs</h4>
+            <h4 className="text-xl font-bold text-white">Old-Style serifs</h4>
             <ul>
               <li>Low contrast between thick and thin strokes</li>
               <li>Diagonal stress in the strokes</li>
@@ -260,7 +260,7 @@ export const BlogContent = () => {
               <li>Slanted serifs on lower-case ascenders</li>
             </ol>
   
-            <h3 className="text-3xl font-bold text-white">
+            <h3 className="text-2xl font-bold text-white">
               Laying the best for successful prototyping
             </h3>
             <p>
@@ -275,14 +275,14 @@ export const BlogContent = () => {
               </p>
             </blockquote>
   
-            <h4 className="text-2xl font-bold text-white">Code example</h4>
+            <h4 className="text-xl font-bold text-white">Code example</h4>
             <p>
               A serif is a small shape or projection that appears at the beginning
               or end of a stroke on a letter. Typefaces with serifs are called
               serif typefaces. Serif fonts are classified as one of the following:
             </p>
   
-            <h4 className="text-2xl font-bold text-white">Table example</h4>
+            <h4 className="text-xl font-bold text-white">Table example</h4>
             <p>
               A serif is a small shape or projection that appears at the beginning
               or end of a stroke on a letter.
@@ -341,7 +341,7 @@ export const BlogContent = () => {
               </tbody>
             </table>
   
-            <h3 className="text-3xl font-bold text-white">
+            <h3 className="text-2xl font-bold text-white">
               Best practices for setting up your prototype
             </h3>
             <p>

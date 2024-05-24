@@ -38,7 +38,7 @@ const colors = ["bg-violet-300", "bg-pink-300", "bg-blue-300", "bg-orange-300"];
 
 export const SmartNavbar = () => {
   return (
-    <div className="relative w-full">
+    <div className="relative w-full bg-black/90">
       <FloatingNav navItems={navItems} />
       <FloatingContainers />
     </div>
@@ -109,8 +109,6 @@ export const FloatingNav = ({
 };
 
 export const FloatingContainers = () => {
-  const [visibleIdx, setVisibleIdx] = useState(-1);
-  const [allOffsetTops, setAllOffsetTops] = useState<Set<number>>(new Set());
   const { scrollY } = useScroll();
   const headingsRef = useRef<any[]>([]);
 
@@ -122,12 +120,14 @@ export const FloatingContainers = () => {
         if (direction > 0) {
           if (
             current >= el.offsetTop &&
-            current < headingsRef.current[idx + 1].offsetTop
+            ((idx < headingsRef.current.length - 1 &&
+              current < headingsRef.current[idx + 1].offsetTop) ||
+              idx === headingsRef.current.length - 1)
           ) {
-            el.classList.add("fixed");
+            el.classList.add("stick");
           }
         } else {
-          el.classList.add("fixed");
+          el.classList.remove("stick");
         }
       });
     }
@@ -141,60 +141,8 @@ export const FloatingContainers = () => {
   }, []);
 
   return (
-    <div>
-      {colors.map((color, index) => (
-        <Container
-          key={color}
-          bgColor={color}
-          isVisible={visibleIdx === index}
-          allOffsetTops={allOffsetTops}
-          setAllOffsetTops={setAllOffsetTops}
-        />
-      ))}
+    <div className="pt-16 bg-black/90">
       <BlogContent />
-      {/* <div className="h-32 bg-gray-100"></div> */}
     </div>
-  );
-};
-
-const Container = ({
-  bgColor,
-  isVisible,
-  allOffsetTops,
-  setAllOffsetTops,
-}: {
-  bgColor: string;
-  isVisible: boolean;
-  allOffsetTops: Set<number>;
-  setAllOffsetTops: (value: Set<number>) => void;
-}) => {
-  const ref = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    if (ref.current) {
-      setAllOffsetTops(allOffsetTops.add(ref.current.offsetTop));
-    }
-  }, [ref.current]);
-
-  return (
-    <motion.div ref={ref} className={classNames("h-screen w-full", bgColor)}>
-      <motion.div
-        initial={{
-          opacity: 1,
-          y: -100,
-        }}
-        animate={{
-          y: isVisible ? 0 : -100,
-          opacity: isVisible ? 1 : 0,
-        }}
-        transition={{
-          duration: 0.2,
-        }}
-        className={classNames(
-          "h-20 border-b border-b-white w-full fixed top-0",
-          bgColor
-        )}
-      ></motion.div>
-    </motion.div>
   );
 };
