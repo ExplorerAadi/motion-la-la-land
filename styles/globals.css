@@ -40,7 +40,7 @@ th, td {
 }
 
 .stick {
-  @apply sticky top-0 py-4 bg-black/90 -mx-4;
+  @apply sticky top-0 py-4 bg-[#010101] -mx-2 transition-all ease-in duration-200;
 }
 
 .progress {

@@ -34,11 +34,9 @@ const navItems = [
   },
 ];
 
-const colors = ["bg-violet-300", "bg-pink-300", "bg-blue-300", "bg-orange-300"];
-
 export const SmartNavbar = () => {
   return (
-    <div className="relative w-full bg-black/90">
+    <div className="relative w-full bg-[#010101]">
       <FloatingNav navItems={navItems} />
       <FloatingContainers />
     </div>
@@ -115,14 +113,15 @@ export const FloatingContainers = () => {
   useMotionValueEvent(scrollY, "change", (current) => {
     if (typeof current === "number") {
       const direction = current! - scrollY.getPrevious()!;
+      const lastIndex = headingsRef.current?.length - 1;
 
       headingsRef.current?.forEach((el, idx) => {
         if (direction > 0) {
           if (
             current >= el.offsetTop &&
-            ((idx < headingsRef.current.length - 1 &&
+            ((idx < lastIndex &&
               current < headingsRef.current[idx + 1].offsetTop) ||
-              idx === headingsRef.current.length - 1)
+              idx === lastIndex)
           ) {
             el.classList.add("stick");
           }
@@ -141,7 +140,7 @@ export const FloatingContainers = () => {
   }, []);
 
   return (
-    <div className="pt-16 bg-black/90">
+    <div className="pt-16 bg-[#010101]">
       <BlogContent />
     </div>
   );

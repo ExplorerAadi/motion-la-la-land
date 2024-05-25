@@ -1,6 +1,6 @@
 export const BlogContent = () => {
     return (
-      <div className="pt-8 pb-16 lg:pt-16 lg:pb-24 bg-black/90 antialiased">
+      <div className="pt-8 pb-16 lg:pt-16 lg:pb-24 bg-[#010101] antialiased">
         <div className="flex justify-between px-4 mx-auto max-w-4xl ">
           <article className="w-full text-gray-600 space-y-6">
             <h1 className="font-extrabold text-4xl text-white">
@@ -202,9 +202,9 @@ export const BlogContent = () => {
               </li>
             </ol>
   
-            <h3 className="text-2xl font-bold text-white">
+            <h2 className="text-3xl font-bold text-white">
               Laying the groundwork for best design
-            </h3>
+            </h2>
             <p>
               Before going digital, you might benefit from scribbling down some
               ideas in a sketchbook. This way, you can think things through before
@@ -260,9 +260,9 @@ export const BlogContent = () => {
               <li>Slanted serifs on lower-case ascenders</li>
             </ol>
   
-            <h3 className="text-2xl font-bold text-white">
+            <h2 className="text-3xl font-bold text-white">
               Laying the best for successful prototyping
-            </h3>
+            </h2>
             <p>
               A serif is a small shape or projection that appears at the
               beginning:
