@@ -11,7 +11,8 @@ export const RedirectLink = ({
 }) => {
   return (
     <Link
-      className="group relative inline-flex h-12 items-center justify-center rounded-md bg-neutral-950 px-6 font-medium text-neutral-200"
+      // className="group relative inline-flex h-10 items-center justify-center rounded-md bg-neutral-950 px-6 font-medium text-neutral-200"
+      className="font-sans group relative inline-flex h-10 items-center justify-center font-medium text-center transition-all disabled:opacity-50 disabled:shadow-none disabled:pointer-events-none text-sm py-3 px-6 rounded-lg text-white shadow-md shadow-gray-900/10 hover:shadow-lg hover:shadow-gray-900/20 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none border border-white"
       href={href}
     >
       <span>{label}</span>
