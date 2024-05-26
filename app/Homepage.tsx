@@ -1,9 +1,9 @@
-import { RedirectLink } from "../components/Button";
 import { Card } from "../components/Card";
 
 export const Homepage = () => {
   return (
-    <div className="flex items-center justify-center p-4 h-full">
+    <div className="flex flex-col items-center justify-start p-4 h-full">
+      <h3 className="pt-32 pb-20 text-white text-5xl font-semibold">Motion La La Land</h3>
       <div className="grid grid-cols-3 gap-4">
         <Card title="Menu Interaction" description="Hamburger menu interaction by animating svg paths." redirectLabel="Demo" redirectLink="/menu-animation" />
         <Card title="Image Reveal Effect" description="Hover over the area to sneak peek the image and click to reveal it." redirectLabel="Demo" redirectLink="/image-reveal-on-hover" />
