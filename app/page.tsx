@@ -4,7 +4,7 @@ import "../styles/globals.css";
 
 export default async function Index() {
   return (
-    <div className="flex flex-col items-center justify-center p-4 h-screen bg-neutral-950">
+    <div className="flex flex-col items-center justify-center p-4 h-full bg-neutral-950">
       <Homepage />
     </div>
   );

@@ -53,6 +53,7 @@ export const ImageRevealOnHover = () => {
           maskX.set(e.clientX - left);
           maskY.set(e.clientY - top);
         }}
+        className="h-screen"
         style={{ WebkitMaskImage: maskImage, maskImage }}
       >
         <img
