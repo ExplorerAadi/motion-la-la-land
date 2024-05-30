@@ -10,24 +10,28 @@ export const Homepage = () => {
         <Card
           title="Menu Interaction"
           description="A hamburger menu created by only animating the svg paths and can be used to toggle the open/close state of sidebar menus."
+          media="/hamburger-menu-animation.mp4"
           redirectLabel="Demo"
           redirectLink="/menu-animation"
         />
         <Card
           title="Image Reveal Effect"
           description="A cool way to hide the image which lets the user take a sneak peek by hovering over the container and can be revealed after clicking on it."
+          media="/image-reveal-on-hover.mp4"
           redirectLabel="Demo"
           redirectLink="/image-reveal-on-hover"
         />
         <Card
           title="Mouse Tracking"
           description="Revealing hidden message when hovering over the text shown."
+          media="/mouse-tracking.mp4"
           redirectLabel="Demo"
           redirectLink="/mouse-tracking"
         />
         <Card
           title="Smart Navbar"
           description="Stick the heading of the section in viewport to the top."
+          media="/smart-navbar.mp4"
           redirectLabel="Demo"
           redirectLink="/smart-navbar"
         />

@@ -5,21 +5,25 @@ import { RedirectLink } from "./Button";
 export const Card = ({
   title,
   description,
+  media,
   redirectLabel,
   redirectLink,
 }: {
   title: string;
   description: string;
+  media: string;
   redirectLabel: string;
   redirectLink: string;
 }) => {
   return (
     <div className="relative flex flex-col justify-between text-gray-700 bg-[#18181B] shadow-md bg-clip-border rounded-xl w-96 border border-[#27272A]">
       <div>
-        <div className="relative h-56 mx-4 -mt-6 overflow-hidden text-white shadow-lg bg-clip-border rounded-xl bg-blue-gray-500 shadow-blue-gray-500/40">
-          <img
-            src="https://images.unsplash.com/photo-1540553016722-983e48a2cd10?ixlib=rb-1.2.1&amp;ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&amp;auto=format&amp;fit=crop&amp;w=800&amp;q=80"
-            alt="card-image"
+        <div className="relative h-64 mx-4 -mt-6 overflow-hidden text-white shadow-lg bg-clip-border rounded-xl bg-blue-gray-500 shadow-blue-gray-500/40">
+          <video
+            className="h-full w-full rounded-md overflow-hidden object-cover"
+            src={media}
+            autoPlay={true}
+            loop={true}
           />
         </div>
         <div className="p-6 text-white">
