@@ -22,8 +22,8 @@ export const Card = ({
           <video
             className="h-full w-full rounded-md overflow-hidden object-cover"
             src={media}
-            autoPlay={true}
-            loop={true}
+            autoPlay
+            loop
           />
         </div>
         <div className="p-6 text-white">

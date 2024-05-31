@@ -4,6 +4,8 @@ import { motion } from "framer-motion";
 import { Card } from "../components/Card";
 import { Spotlight } from "../components/Spotlight";
 
+const cloudinaryDomain = "https://res.cloudinary.com";
+
 export const Homepage = () => {
   return (
     <div className="flex flex-col items-center p-4 h-full">
@@ -18,14 +20,13 @@ export const Homepage = () => {
         }}
         className="pb-20 bg-gradient-to-br from-slate-300 to-slate-500 py-4 bg-clip-text text-center text-4xl font-semibold tracking-tight text-transparent md:text-7xl"
       >
-        {/* <h3 className="pb-24 text-white text-5xl font-semibold"> */}
         Motion La La Land
       </motion.h1>
       <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-x-4 gap-y-12">
         <Card
           title="Menu Interaction"
           description="A hamburger menu created by only animating the svg paths and can be used to toggle the open/close state of sidebar menus."
-          media="/hamburger-menu-animation.mp4"
+          media={`${cloudinaryDomain}/${process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME}/video/upload/v1717143294/menu-svg.mp4`}
           redirectLabel="Demo"
           redirectLink="/menu-animation"
         />
@@ -39,14 +40,14 @@ export const Homepage = () => {
         <Card
           title="Mask Image Effect"
           description="Hiding a text/image behind the content being shown on the screen that can be revealed in multiple ways, here I am using mouse hover."
-          media="/mouse-tracking.mp4"
+          media={`${cloudinaryDomain}/${process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME}/video/upload/v1717143294/mouse-tracking.mp4`}
           redirectLabel="Demo"
-          redirectLink="/mouse-tracking"
+          redirectLink="/mask-image-effect"
         />
         <Card
           title="Smart Navbar"
           description="Stick the heading of the section in viewport to the top, super helpful when reading a blog post or a long article."
-          media="/smart-navbar.mp4"
+          media={`${cloudinaryDomain}/${process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME}/video/upload/v1717143294/smart-navbar.mp4`}
           redirectLabel="Demo"
           redirectLink="/smart-navbar"
         />
