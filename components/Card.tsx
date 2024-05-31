@@ -27,10 +27,10 @@ export const Card = ({
           />
         </div>
         <div className="p-6 text-white">
-          <h5 className="block mb-2 font-sans text-xl antialiased font-semibold leading-snug tracking-normal">
+          <h5 className="block mb-2 text-xl antialiased font-semibold tracking-normal">
             {title}
           </h5>
-          <p className="block font-sans text-sm antialiased font-light leading-normal">
+          <p className="block text-sm antialiased font-light leading-normal">
             {description}
           </p>
         </div>
