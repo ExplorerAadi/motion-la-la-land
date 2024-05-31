@@ -1,18 +1,57 @@
-import { RedirectLink } from "../components/Button";
+"use client";
+
+import { motion } from "framer-motion";
+import { Card } from "../components/Card";
+import { Spotlight } from "../components/Spotlight";
 
 export const Homepage = () => {
   return (
-    <div className="flex items-center justify-center p-4 h-screen">
-      <div className="grid grid-cols-3 gap-4">
-        <RedirectLink label="Menu Interaction" href="/menu-animation" />
-        <RedirectLink
-          label="Image Reveal Effect"
-          href="/image-reveal-on-hover"
+    <div className="flex flex-col items-center p-4 h-full">
+      <Spotlight className="-top-[10%] left-[15%] md:top-0" />
+      <motion.h1
+        initial={{ opacity: 0, y: 120 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        transition={{
+          delay: 0.3,
+          duration: 0.8,
+          ease: "easeInOut",
+        }}
+        className="pb-20 bg-gradient-to-br from-slate-300 to-slate-500 py-4 bg-clip-text text-center text-4xl font-semibold tracking-tight text-transparent md:text-7xl"
+      >
+        {/* <h3 className="pb-24 text-white text-5xl font-semibold"> */}
+        Motion La La Land
+      </motion.h1>
+      <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-x-4 gap-y-12">
+        <Card
+          title="Menu Interaction"
+          description="A hamburger menu created by only animating the svg paths and can be used to toggle the open/close state of sidebar menus."
+          media="/hamburger-menu-animation.mp4"
+          redirectLabel="Demo"
+          redirectLink="/menu-animation"
         />
-        <RedirectLink label="Custom Animation" href="/custom-animation" />
-        <RedirectLink label="Stateless Animation" href="/stateless-animation" />
-        <RedirectLink label="Mouse Tracking" href="/mouse-tracking" />
-        <RedirectLink label="Smart Navbar" href="/smart-navbar" />
+        {/* <Card
+          title="Image Reveal Effect"
+          description="Hiding a secret image behind the content being shown on the screen that can be revealed in multiple ways, here I am using mouse hover and click to reveal it."
+          media="/image-reveal-on-hover.mp4"
+          redirectLabel="Demo"
+          redirectLink="/image-reveal-on-hover"
+        /> */}
+        <Card
+          title="Mask Image Effect"
+          description="Hiding a text/image behind the content being shown on the screen that can be revealed in multiple ways, here I am using mouse hover."
+          media="/mouse-tracking.mp4"
+          redirectLabel="Demo"
+          redirectLink="/mouse-tracking"
+        />
+        <Card
+          title="Smart Navbar"
+          description="Stick the heading of the section in viewport to the top, super helpful when reading a blog post or a long article."
+          media="/smart-navbar.mp4"
+          redirectLabel="Demo"
+          redirectLink="/smart-navbar"
+        />
+        {/* <RedirectLink label="Custom Animation" href="/custom-animation" /> */}
+        {/* <RedirectLink label="Stateless Animation" href="/stateless-animation" /> */}
       </div>
     </div>
   );

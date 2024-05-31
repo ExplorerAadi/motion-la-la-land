@@ -1,3 +1,5 @@
+@import url("https://fonts.googleapis.com/css2?family=Exo+2:ital,wght@0,100..900;1,100..900&display=swap");
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -35,7 +37,8 @@ body {
   color: var(--accent);
 }
 
-th, td {
+th,
+td {
   padding: 8px;
 }
 
@@ -85,4 +88,20 @@ th, td {
   justify-content: center;
   align-items: center;
   cursor: pointer;
+}
+
+::-webkit-scrollbar {
+  height: 10px;
+  width: 8px;
+  background: #000;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #2c2c2c;
+  -webkit-border-radius: 1ex;
+  -webkit-box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.75);
+}
+
+::-webkit-scrollbar-corner {
+  background: #000;
 }

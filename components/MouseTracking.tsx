@@ -73,7 +73,7 @@ export const FollowCursor = () => {
             setIsHovered(false);
           }}
         >
-          A software engineer - with skills that haven't been replaced by A.I
+          A software engineer - with skills that haven't been replaced by AI
           (yet) - making good shit without compromising on making money.
         </p>
       </motion.div>

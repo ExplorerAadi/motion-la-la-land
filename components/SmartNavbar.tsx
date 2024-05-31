@@ -140,7 +140,7 @@ export const FloatingContainers = () => {
   }, []);
 
   return (
-    <div className="pt-16 bg-[#010101]">
+    <div className="pt-16 bg-[#010101] scroll-smooth">
       <BlogContent />
     </div>
   );

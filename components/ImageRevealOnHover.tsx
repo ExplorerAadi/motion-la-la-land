@@ -41,7 +41,7 @@ export const ImageRevealOnHover = () => {
   return (
     <section>
       <motion.div
-        onHoverStart={() => !size && animate(maskSize, 50)}
+        onHoverStart={() => !size && animate(maskSize, 80)}
         onHoverEnd={() => !size && animate(maskSize, 0)}
         onPointerDown={() => !size && animate(maskSize, 40)}
         onClick={(e) => setSize(e.currentTarget.getBoundingClientRect())}
@@ -53,6 +53,7 @@ export const ImageRevealOnHover = () => {
           maskX.set(e.clientX - left);
           maskY.set(e.clientY - top);
         }}
+        className="h-screen"
         style={{ WebkitMaskImage: maskImage, maskImage }}
       >
         <img
