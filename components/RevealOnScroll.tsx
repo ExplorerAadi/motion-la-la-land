@@ -31,7 +31,7 @@ export const RevealOnScroll = ({
         }}
         initial="hidden"
         animate={mainControls}
-        transition={{ duration: 0.5, delay: 0.25 }}
+        transition={{ duration: 0.75, delay: 0.25 }}
       >
         {children}
       </motion.div>
@@ -42,7 +42,7 @@ export const RevealOnScroll = ({
         }}
         initial="hidden"
         animate={slideControls}
-        transition={{ duration: 0.5, ease: "easeIn" }}
+        transition={{ duration: 0.75, ease: "easeIn" }}
         style={{
           position: "absolute",
           top: 4,

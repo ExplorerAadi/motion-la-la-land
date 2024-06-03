@@ -3,7 +3,7 @@ import { RevealOnScroll } from "../../components/RevealOnScroll";
 export default function RevealOnScrollPage() {
   return (
     <section className="bg-neutral-950 min-h-screen font-custom w-full flex justify-center items-center">
-      <div className="w-full">
+      <div>
         <RevealOnScroll>
           <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold bg-gradient-to-r from-violet-500 via-pink-500 to-orange-400 bg-clip-text text-transparent max-w-xl">
             Engineer. Writer. Conversationalist.
