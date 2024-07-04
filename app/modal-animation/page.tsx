@@ -39,17 +39,17 @@ export default function ModalAnimationPage() {
           <>
             <motion.div
               ref={ref}
-              className="absolute inset-0 h-full w-full bg-black/90 z-10"
+              className="fixed inset-0 h-full w-full bg-black/90 z-10"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
             />
             <motion.div
-              className="inset-0 h-screen w-screen absolute z-20 flex justify-center items-center"
+              className="inset-0 h-screen w-screen fixed z-20 flex justify-center items-center"
               layoutId={`${modalId}-btn`}
             >
-              <div className="w-1/2 h-2/3 flex flex-col rounded-xl overflow-hidden">
-                <div className="w-full h-full relative">
+              <div className="w-2/5 h-3/4 flex flex-col rounded-xl overflow-hidden">
+                <div className="w-full h-3/4 relative flex justify-center bg-white/10">
                   <motion.p
                     className="absolute bottom-2 right-2 rounded-lg bg-black/50 px-2 text-white"
                     initial="initial"
@@ -64,19 +64,16 @@ export default function ModalAnimationPage() {
                   <motion.img
                     src={selectedModalContent?.src.large}
                     alt=""
-                    className="w-full h-full aspect-square"
+                    className="h-full block"
                     layoutId={`${modalId}-img`}
                   />
                 </div>
-                <motion.p className="bg-slate-800 text-slate-400 py-8 px-6">
+                <motion.p className="bg-slate-800 text-slate-400 py-6 px-4 h-1/4">
                   Discover the nostalgic charm of this retro cabinet captured by{" "}
                   {selectedModalContent.photographer}. Featuring framed black
                   and white photos, decorative vases, and a stack of books with
                   a vase of dry reeds, this beautifully composed scene evokes a
-                  sense of timeless elegance. <br />
-                  The warm, muted tones add to the vintage atmosphere, making it
-                  a perfect addition to any classic interior design. View the
-                  full image and more of their work on Pexels.
+                  sense of timeless elegance.
                 </motion.p>
               </div>
             </motion.div>
