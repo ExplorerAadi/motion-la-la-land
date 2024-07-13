@@ -1,36 +1,54 @@
 "use client";
-import { motion } from "framer-motion";
+
+import { AnimatePresence, motion } from "framer-motion";
 import { useEffect, useState } from "react";
 
+enum EXPANDED_STATE {
+  COLLAPSED,
+  EXPANDED_1,
+  EXPANDED_2,
+}
+
 export const PrivateIsland = () => {
-  const [isExpanded, setIsExpanded] = useState(false);
+  const [expandedStage, setExpandedStage] = useState<EXPANDED_STATE>(
+    EXPANDED_STATE.COLLAPSED
+  );
 
   useEffect(() => {
-    const timer = setTimeout(() => setIsExpanded(true), 1000);
+    const timer = setTimeout(
+      () => setExpandedStage(EXPANDED_STATE.EXPANDED_1),
+      1000
+    );
 
     return () => clearTimeout(timer);
   }, []);
 
   return (
     <div className="flex items-center justify-center w-full h-screen cursor-pointer">
-      {isExpanded ? (
-        <ExpandedStageOne setIsExpanded={setIsExpanded} />
-      ) : (
-        <BaseDynamicIsland setIsExpanded={setIsExpanded} />
-      )}
+      <AnimatePresence mode="wait">
+        {expandedStage === EXPANDED_STATE.COLLAPSED && (
+          <BaseDynamicIsland setExpandedStage={setExpandedStage} />
+        )}
+        {expandedStage === EXPANDED_STATE.EXPANDED_1 && (
+          <ExpandedStageOne setExpandedStage={setExpandedStage} />
+        )}
+        {expandedStage === EXPANDED_STATE.EXPANDED_2 && (
+          <ExpandedStageTwo setExpandedStage={setExpandedStage} />
+        )}
+      </AnimatePresence>
     </div>
   );
 };
 
 const BaseDynamicIsland = ({
-  setIsExpanded,
+  setExpandedStage,
 }: {
-  setIsExpanded: (value: boolean) => void;
+  setExpandedStage: (value: EXPANDED_STATE) => void;
 }) => {
   return (
     <motion.button
       className="bg-black text-white flex justify-between items-center space-x-2 w-[100px] h-7"
-      onClick={() => setIsExpanded(true)}
+      onClick={() => setExpandedStage(EXPANDED_STATE.EXPANDED_1)}
       layoutId="expand-stage-1"
       style={{ borderRadius: 999 }}
     ></motion.button>
@@ -38,10 +56,20 @@ const BaseDynamicIsland = ({
 };
 
 const ExpandedStageOne = ({
-  setIsExpanded,
+  setExpandedStage,
 }: {
-  setIsExpanded: (value: boolean) => void;
+  setExpandedStage: (value: EXPANDED_STATE) => void;
 }) => {
+  const variants = {
+    leftElementHidden: { opacity: 0, scale: 0.5, transformOrigin: "left" },
+    rightElementHidden: { opacity: 0, scale: 0.5, transformOrigin: "right" },
+    visible: {
+      opacity: 1,
+      x: 0,
+      scale: 1,
+    },
+  };
+
   return (
     <motion.div
       className="p-2.5 bg-black text-white flex justify-between items-center space-x-2"
@@ -50,28 +78,66 @@ const ExpandedStageOne = ({
     >
       <motion.button
         className="w-9 h-9 bg-slate-600"
-        onClick={() => setIsExpanded(false)}
+        onClick={() => setExpandedStage(EXPANDED_STATE.COLLAPSED)}
         style={{ borderRadius: 999 }}
+        initial={{ opacity: 0, scale: 0.5 }}
+        animate={{ opacity: 1, scale: 1 }}
+        exit={{ opacity: 0, scale: 0.5 }}
+        transition={{ duration: 0.4, type: "spring" }}
       ></motion.button>
-      <div className="flex flex-col pr-16 justify-center">
+      <motion.div
+        className="flex flex-col pr-16 justify-center"
+        variants={variants}
+        initial="leftElementHidden"
+        animate="visible"
+        exit="leftElementHidden"
+        transition={{ delay: 0.2, duration: 0.4, type: "spring" }}
+        key="options-1"
+      >
         <p className="text-sm text-slate-500 leading-tight">Hello, I&apos;m</p>
         <h3 className="text-base text-white leading-tight">Aditya</h3>
-      </div>
-      <div className="flex justify-center space-x-2">
-        <motion.button
+      </motion.div>
+      <motion.div
+        className="flex justify-center space-x-2"
+        variants={variants}
+        initial="rightElementHidden"
+        animate="visible"
+        exit="rightElementHidden"
+        transition={{ delay: 0.2, duration: 0.4, type: "spring" }}
+        key="options-2"
+      >
+        <button
           className="w-9 h-9 bg-[#F57202] p-2"
           style={{ borderRadius: 999 }}
+          onClick={() => setExpandedStage(EXPANDED_STATE.EXPANDED_2)}
         >
           <MagnifyingGlassIcon />
-        </motion.button>
-        <motion.button
+        </button>
+        <button
           className="w-9 h-9 bg-[#008BF5] p-2"
           style={{ borderRadius: 999 }}
         >
           <MoreIcon />
-        </motion.button>
-      </div>
+        </button>
+      </motion.div>
     </motion.div>
+  );
+};
+
+const ExpandedStageTwo = ({
+  setExpandedStage,
+}: {
+  setExpandedStage: (value: EXPANDED_STATE) => void;
+}) => {
+  return (
+    <motion.button
+      className="px-5 py-6 bg-black text-white h-[200px] min-w-96 max-w-96"
+      layoutId="expand-stage-1"
+      style={{ borderRadius: 36 }}
+      onClick={() => setExpandedStage(EXPANDED_STATE.EXPANDED_1)}
+    >
+      <div className="">aditya</div>
+    </motion.button>
   );
 };
 
