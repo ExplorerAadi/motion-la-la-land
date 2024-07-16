@@ -104,7 +104,14 @@ const ExpandedStageOne = ({
         exit="leftElementHidden"
         transition={{ delay: 0.2, duration: 0.4, type: "spring" }}
         key="profile-button"
-      ></motion.button>
+      >
+        <img
+          src="/cropped-profile-pic.JPG"
+          className="w-full h-full overflow-hidden"
+          style={{ borderRadius: 999 }}
+          alt="Profile"
+        />
+      </motion.button>
       <motion.div
         className="flex flex-col pr-12 justify-center"
         variants={variants}
@@ -166,12 +173,14 @@ const ExpandedStageTwo = ({
         exit={{ opacity: 0 }}
         key="bio"
       >
-        It's been 12 years since I got into design. I now have clear principles,
-        the main one being "value instead of mindless execution". It's easy to
-        print generic solutions, but what we designers are hired for is our
-        unique point of view and creative thinking. Usability combined with
-        aesthetics is the key to memorable and enjoyable products. This is what
-        I've been applying in my design agency ↗ since day one.
+        It's been almost <span className="text-white">5 years</span> since I got
+        into Frontend Development. In those years, I've developed user
+        experiences for web, mobile and even desktop together with extremely
+        talented people while being{" "}
+        <span className="text-white">the youngest</span> on every team. And now,
+        I'm working towards mastering the intersection of{" "}
+        <span className="text-white">Development, Product and Design</span> to
+        single-handedly ship the best possible product.
       </motion.p>
     </motion.button>
   );
@@ -241,42 +250,6 @@ const ExpandedStageThree = ({
             </AnimatePresence>
           </motion.a>
         ))}
-        {/* <motion.a className="inline-flex items-center">
-          <span
-            className="w-5 h-5 inline-block"
-            style={{
-              backgroundImage:
-                "url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxNiAxNiIgZmlsbD0iI0ZGRkZGRiI+PHBhdGggZD0iTTcuOTk5IDBDMy41ODIgMCAwIDMuNTk2IDAgOC4wMzJhOC4wMzEgOC4wMzEgMCAwIDAgNS40NzIgNy42MjFjLjQuMDc0LjU0Ni0uMTc0LjU0Ni0uMzg3IDAtLjE5MS0uMDA3LS42OTYtLjAxMS0xLjM2Ni0yLjIyNS40ODUtMi42OTUtMS4wNzctMi42OTUtMS4wNzctLjM2My0uOTI4LS44ODgtMS4xNzUtLjg4OC0xLjE3NS0uNzI3LS40OTguMDU0LS40ODguMDU0LS40ODguODAzLjA1NyAxLjIyNS44MjggMS4yMjUuODI4LjcxNCAxLjIyNyAxLjg3My44NzMgMi4zMjkuNjY3LjA3Mi0uNTE5LjI3OS0uODczLjUwOC0xLjA3NC0xLjc3Ni0uMjAzLTMuNjQ0LS44OTItMy42NDQtMy45NjkgMC0uODc3LjMxMi0xLjU5NC44MjQtMi4xNTYtLjA4My0uMjAzLS4zNTctMS4wMi4wNzgtMi4xMjUgMCAwIC42NzItLjIxNiAyLjIuODIzYTcuNjMzIDcuNjMzIDAgMCAxIDIuMDAzLS4yNyA3LjY1IDcuNjUgMCAwIDEgMi4wMDMuMjcxYzEuNTI3LTEuMDM5IDIuMTk4LS44MjMgMi4xOTgtLjgyMy40MzYgMS4xMDYuMTYyIDEuOTIyLjA4IDIuMTI1LjUxMy41NjIuODIyIDEuMjc5LjgyMiAyLjE1NiAwIDMuMDg1LTEuODcgMy43NjQtMy42NTIgMy45NjMuMjg3LjI0OC41NDMuNzM4LjU0MyAxLjQ4NyAwIDEuMDc0LS4wMSAxLjk0LS4wMSAyLjIwMyAwIC4yMTUuMTQ0LjQ2NS41NS4zODZBOC4wMzIgOC4wMzIgMCAwIDAgMTYgOC4wMzJDMTYgMy41OTYgMTIuNDE4IDAgNy45OTkgMHoiPjwvcGF0aD48L3N2Zz4=)",
-            }}
-          ></span>
-          <span className="text-white pl-1 text-xs">Github</span>
-        </motion.a>
-        <motion.a className="inline-flex items-center">
-          <span
-            className="w-5 h-5 inline-block"
-            style={{
-              backgroundImage:
-                "url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiA/PjxzdmcgZGF0YS1uYW1lPSJMYXllciAxIiBpZD0iTGF5ZXJfMSIgdmlld0JveD0iMCAwIDEyOCAxMjgiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGRlZnM+PHN0eWxlPi5jbHMtMSwuY2xzLTN7ZmlsbDpub25lO30uY2xzLTJ7ZmlsbDojRkZGRkZGO30uY2xzLTN7c3Ryb2tlOiNGRkZGRkY7c3Ryb2tlLW1pdGVybGltaXQ6MTA7c3Ryb2tlLXdpZHRoOjYuNXB4O308L3N0eWxlPjwvZGVmcz48dGl0bGUvPjxjaXJjbGUgY2xhc3M9ImNscy0xIiBjeD0iNjQiIGN5PSI2My41IiByPSI1NCIvPjxwYXRoIGNsYXNzPSJjbHMtMiIgZD0iTTY0LDE2QTQ3LjUsNDcuNSwwLDEsMSwxNi41LDYzLjUsNDcuNTUsNDcuNTUsMCwwLDEsNjQsMTZtMC02LjVhNTQsNTQsMCwxLDAsNTQsNTQsNTQsNTQsMCwwLDAtNTQtNTRaIi8+PHBhdGggY2xhc3M9ImNscy0zIiBkPSJNODcuNTgsMTA3LjcyYy0xOS42Ny03MC4wOS0zOS4zNC05MS0zOS4zNC05MSIvPjxwYXRoIGNsYXNzPSJjbHMtMyIgZD0iTTExLjk0LDU2LjQ2Uzc3LjYsNjIuMzksOTkuNDIsMjkuMTMiLz48cGF0aCBjbGFzcz0iY2xzLTMiIGQ9Ik0yOS43MywxMDBzMjQuMjEtNDguNjUsODUuOTQtMzMuNjciLz48L3N2Zz4=)",
-            }}
-          ></span>
-          <span className="text-white pl-1 text-xs">Dribble</span>
-        </motion.a>
-        <motion.a className="inline-flex items-center">
-          <span className="w-4 h-4 inline-block">
-            <XIcon className="w-4 h-4" />
-          </span>
-          <span className="text-white pl-1 text-xs">Twitter</span>
-        </motion.a>
-        <motion.a className="inline-flex items-center">
-          <span
-            className="w-5 h-5 inline-block"
-            style={{
-              backgroundImage:
-                "url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiA/PjxzdmcgZGF0YS1uYW1lPSJMYXllciAxIiBpZD0iTGF5ZXJfMSIgdmlld0JveD0iMCAwIDEyOCAxMjgiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGRlZnM+PHN0eWxlPi5jbHMtMXtmaWxsOiNGRkZGRkY7fTwvc3R5bGU+PC9kZWZzPjx0aXRsZS8+PHBhdGggY2xhc3M9ImNscy0xIiBkPSJNNjQsMzIuMjljLjIzLDAsMjIuOTIsMCwzNy45LDEuMDhsLjY2LjA2YzIsLjE4LDQuMTYuMzksNi4yOCwyLjU4bDAsMCwwLDBjMSwxLDIuMTQsNC41NCwyLjUzLDcuMDdhMTU2LDE1NiwwLDAsMSwxLDE2LjcxdjguMjRhMTU2LjgyLDE1Ni44MiwwLDAsMS0xLDE2LjcyYy0uMzcsMi40Ny0xLjU0LDYuMDYtMi41Miw3bDAsMCwwLDBjLTIuMTEsMi4xOC00LjMyLDIuMzktNi4yNywyLjU4bC0uNjguMDdjLTE0LjcyLDEtMzYuODksMS4xLTM3Ljg5LDEuMS0xLjE1LDAtMjgtLjI3LTM2LjU3LTEtLjUxLS4wOC0xLS4xNS0xLjU4LS4yMS0yLjI4LS4yNy00Ljg3LS41OC02LjczLTIuNTFsMCwwLDAsMGMtMS0xLTIuMTQtNC41My0yLjUyLTcuMDVhMTU2LDE1NiwwLDAsMS0xLTE2LjcxVjU5Ljg2YTE1Ni43OSwxNTYuNzksMCwwLDEsMS0xNi43MWMuMzktMi41NSwxLjU1LTYuMDksMi41My03LjA3bDAsMCwwLDBjMi4xMi0yLjE5LDQuMzMtMi4zOSw2LjI4LTIuNThsLjY2LS4wNmMxNS0xLjA3LDM3LjY3LTEuMDgsMzcuODktMS4wOEg2NG0wLTYuNUg2NHMtMjMuMDksMC0zOC40OCwxLjFjLTIuMTUuMjUtNi44My4yNy0xMSw0LjU5LTMuMjksMy4zLTQuMzcsMTAuNzktNC4zNywxMC43OUExNjIuMjUsMTYyLjI1LDAsMCwwLDksNTkuODZWNjguMWExNjIuMTksMTYyLjE5LDAsMCwwLDEuMSwxNy41OXMxLjA3LDcuNDksNC4zNywxMC43OGM0LjE5LDQuMzIsOS42OCw0LjE5LDEyLjEzLDQuNjUsOC44LjgzLDM3LjQsMS4wOSwzNy40LDEuMDlzMjMuMTEsMCwzOC41MS0xLjEzYzIuMTUtLjI1LDYuODQtLjI4LDExLTQuNiwzLjI5LTMuMjksNC4zNy0xMC43OCw0LjM3LTEwLjc4QTE2Mi4yNiwxNjIuMjYsMCwwLDAsMTE5LDY4LjExVjU5Ljg3YTE2Mi4yNywxNjIuMjcsMCwwLDAtMS4xLTE3LjU5cy0xLjA3LTcuNDktNC4zNy0xMC43OWMtNC4xOC00LjMyLTguODctNC4zNS0xMS00LjU5Qzg3LjExLDI1Ljc5LDY0LDI1Ljc5LDY0LDI1Ljc5WiIvPjxwb2x5Z29uIGNsYXNzPSJjbHMtMSIgcG9pbnRzPSI1NC4xMyA0Ny42MSA1NC4xMyA4MC4zOSA4Mi4xMiA2NCA1NC4xMyA0Ny42MSIvPjwvc3ZnPg==)",
-            }}
-          ></span>
-          <span className="text-white pl-1 text-xs">Youtube</span>
-        </motion.a> */}
       </motion.div>
     </motion.div>
   );
