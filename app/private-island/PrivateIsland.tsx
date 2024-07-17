@@ -136,11 +136,11 @@ const ExpandedStageOne = ({
         key="options-button"
       >
         <button
-          className="w-9 h-9 bg-[#F57202] p-2"
+          className="w-9 h-9 bg-[#F57202]"
           style={{ borderRadius: 999 }}
           onClick={() => setExpandedStage(EXPANDED_STATE.EXPANDED_2)}
         >
-          <MagnifyingGlassIcon />
+          <AudioIcon />
         </button>
         <button
           className="w-9 h-9 bg-[#008BF5] p-2"
@@ -200,7 +200,7 @@ const ExpandedStageThree = ({
       style={{ borderRadius: 36 }}
     >
       <motion.div
-        className="flex justify-center items-center p-1.5 space-x-1.5"
+        className="flex justify-center items-center p-1.5"
         variants={variants}
         initial="elementHidden"
         animate="visible"
@@ -210,6 +210,9 @@ const ExpandedStageThree = ({
       >
         {links.map((link, index) => (
           <motion.a
+            href={link.title === links[0].title ? undefined : link.href}
+            target="_blank"
+            rel="noopener noreferrer"
             layout
             className="inline-flex items-center relative z-10 px-2.5 h-6"
             style={{ borderRadius: 32 }}
@@ -263,6 +266,20 @@ const links = [
         <ArrowLeftIcon className="w-4 h-[18px]" />
       </span>
     ),
+    href: "/private-island",
+  },
+  {
+    title: "Website",
+    icon: () => (
+      <span
+        className="w-5 h-5 inline-block"
+        style={{
+          backgroundImage:
+            "url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz48IS0tIFVwbG9hZGVkIHRvOiBTVkcgUmVwbywgd3d3LnN2Z3JlcG8uY29tLCBHZW5lcmF0b3I6IFNWRyBSZXBvIE1peGVyIFRvb2xzIC0tPg0KPHN2ZyB2aWV3Qm94PSIwIDAgMjQgMjQiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+DQo8cGF0aCBkPSJNNyA4TDMgMTEuNjkyM0w3IDE2TTE3IDhMMjEgMTEuNjkyM0wxNyAxNk0xNCA0TDEwIDIwIiBzdHJva2U9IiNGRkZGRkYiIHN0cm9rZS13aWR0aD0iMiIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2UtbGluZWpvaW49InJvdW5kIi8+DQo8L3N2Zz4=)",
+        }}
+      ></span>
+    ),
+    href: "https://exploreraadi.com",
   },
   {
     title: "Github",
@@ -275,18 +292,7 @@ const links = [
         }}
       ></span>
     ),
-  },
-  {
-    title: "Dribble",
-    icon: () => (
-      <span
-        className="w-5 h-5 inline-block"
-        style={{
-          backgroundImage:
-            "url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiA/PjxzdmcgZGF0YS1uYW1lPSJMYXllciAxIiBpZD0iTGF5ZXJfMSIgdmlld0JveD0iMCAwIDEyOCAxMjgiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGRlZnM+PHN0eWxlPi5jbHMtMSwuY2xzLTN7ZmlsbDpub25lO30uY2xzLTJ7ZmlsbDojRkZGRkZGO30uY2xzLTN7c3Ryb2tlOiNGRkZGRkY7c3Ryb2tlLW1pdGVybGltaXQ6MTA7c3Ryb2tlLXdpZHRoOjYuNXB4O308L3N0eWxlPjwvZGVmcz48dGl0bGUvPjxjaXJjbGUgY2xhc3M9ImNscy0xIiBjeD0iNjQiIGN5PSI2My41IiByPSI1NCIvPjxwYXRoIGNsYXNzPSJjbHMtMiIgZD0iTTY0LDE2QTQ3LjUsNDcuNSwwLDEsMSwxNi41LDYzLjUsNDcuNTUsNDcuNTUsMCwwLDEsNjQsMTZtMC02LjVhNTQsNTQsMCwxLDAsNTQsNTQsNTQsNTQsMCwwLDAtNTQtNTRaIi8+PHBhdGggY2xhc3M9ImNscy0zIiBkPSJNODcuNTgsMTA3LjcyYy0xOS42Ny03MC4wOS0zOS4zNC05MS0zOS4zNC05MSIvPjxwYXRoIGNsYXNzPSJjbHMtMyIgZD0iTTExLjk0LDU2LjQ2Uzc3LjYsNjIuMzksOTkuNDIsMjkuMTMiLz48cGF0aCBjbGFzcz0iY2xzLTMiIGQ9Ik0yOS43MywxMDBzMjQuMjEtNDguNjUsODUuOTQtMzMuNjciLz48L3N2Zz4=)",
-        }}
-      ></span>
-    ),
+    href: "https://github.com/ExplorerAadi",
   },
   {
     title: "Twitter",
@@ -295,18 +301,20 @@ const links = [
         <XIcon className="w-4 h-4" />
       </span>
     ),
+    href: "https://twitter.com/exploreraadi",
   },
   {
-    title: "Youtube",
+    title: "LinkedIn",
     icon: () => (
       <span
-        className="w-5 h-5 inline-block"
+        className="w-[18px] h-[18px] inline-block -mt-[3px]"
         style={{
           backgroundImage:
-            "url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiA/PjxzdmcgZGF0YS1uYW1lPSJMYXllciAxIiBpZD0iTGF5ZXJfMSIgdmlld0JveD0iMCAwIDEyOCAxMjgiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGRlZnM+PHN0eWxlPi5jbHMtMXtmaWxsOiNGRkZGRkY7fTwvc3R5bGU+PC9kZWZzPjx0aXRsZS8+PHBhdGggY2xhc3M9ImNscy0xIiBkPSJNNjQsMzIuMjljLjIzLDAsMjIuOTIsMCwzNy45LDEuMDhsLjY2LjA2YzIsLjE4LDQuMTYuMzksNi4yOCwyLjU4bDAsMCwwLDBjMSwxLDIuMTQsNC41NCwyLjUzLDcuMDdhMTU2LDE1NiwwLDAsMSwxLDE2LjcxdjguMjRhMTU2LjgyLDE1Ni44MiwwLDAsMS0xLDE2LjcyYy0uMzcsMi40Ny0xLjU0LDYuMDYtMi41Miw3bDAsMCwwLDBjLTIuMTEsMi4xOC00LjMyLDIuMzktNi4yNywyLjU4bC0uNjguMDdjLTE0LjcyLDEtMzYuODksMS4xLTM3Ljg5LDEuMS0xLjE1LDAtMjgtLjI3LTM2LjU3LTEtLjUxLS4wOC0xLS4xNS0xLjU4LS4yMS0yLjI4LS4yNy00Ljg3LS41OC02LjczLTIuNTFsMCwwLDAsMGMtMS0xLTIuMTQtNC41My0yLjUyLTcuMDVhMTU2LDE1NiwwLDAsMS0xLTE2LjcxVjU5Ljg2YTE1Ni43OSwxNTYuNzksMCwwLDEsMS0xNi43MWMuMzktMi41NSwxLjU1LTYuMDksMi41My03LjA3bDAsMCwwLDBjMi4xMi0yLjE5LDQuMzMtMi4zOSw2LjI4LTIuNThsLjY2LS4wNmMxNS0xLjA3LDM3LjY3LTEuMDgsMzcuODktMS4wOEg2NG0wLTYuNUg2NHMtMjMuMDksMC0zOC40OCwxLjFjLTIuMTUuMjUtNi44My4yNy0xMSw0LjU5LTMuMjksMy4zLTQuMzcsMTAuNzktNC4zNywxMC43OUExNjIuMjUsMTYyLjI1LDAsMCwwLDksNTkuODZWNjguMWExNjIuMTksMTYyLjE5LDAsMCwwLDEuMSwxNy41OXMxLjA3LDcuNDksNC4zNywxMC43OGM0LjE5LDQuMzIsOS42OCw0LjE5LDEyLjEzLDQuNjUsOC44LjgzLDM3LjQsMS4wOSwzNy40LDEuMDlzMjMuMTEsMCwzOC41MS0xLjEzYzIuMTUtLjI1LDYuODQtLjI4LDExLTQuNiwzLjI5LTMuMjksNC4zNy0xMC43OCw0LjM3LTEwLjc4QTE2Mi4yNiwxNjIuMjYsMCwwLDAsMTE5LDY4LjExVjU5Ljg3YTE2Mi4yNywxNjIuMjcsMCwwLDAtMS4xLTE3LjU5cy0xLjA3LTcuNDktNC4zNy0xMC43OWMtNC4xOC00LjMyLTguODctNC4zNS0xMS00LjU5Qzg3LjExLDI1Ljc5LDY0LDI1Ljc5LDY0LDI1Ljc5WiIvPjxwb2x5Z29uIGNsYXNzPSJjbHMtMSIgcG9pbnRzPSI1NC4xMyA0Ny42MSA1NC4xMyA4MC4zOSA4Mi4xMiA2NCA1NC4xMyA0Ny42MSIvPjwvc3ZnPg==)",
+            "url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIiB2ZXJzaW9uPSIxLjEiIHZpZXdCb3g9IjAgMCAyNTYgMjU2IiB4bWw6c3BhY2U9InByZXNlcnZlIiBmaWxsPSIjRkZGIiBzdHJva2Utd2lkdGg9IjEiPgoKPGRlZnM+CjwvZGVmcz4KPGcgc3R5bGU9InN0cm9rZTogbm9uZTsgc3Ryb2tlLXdpZHRoOiAwOyBzdHJva2UtZGFzaGFycmF5OiBub25lOyBzdHJva2UtbGluZWNhcDogYnV0dDsgc3Ryb2tlLWxpbmVqb2luOiBtaXRlcjsgc3Ryb2tlLW1pdGVybGltaXQ6IDEwOyBmaWxsOiBub25lOyBmaWxsLXJ1bGU6IG5vbnplcm87IG9wYWNpdHk6IDE7IiB0cmFuc2Zvcm09InRyYW5zbGF0ZSgxLjQwNjU5MzQwNjU5MzQwMTYgMS40MDY1OTM0MDY1OTM0MDE2KSBzY2FsZSgyLjgxIDIuODEpIiA+Cgk8cGF0aCBkPSJNIDEuNDggMjkuOTEgaCAxOC42NTcgdiA2MC4wMSBIIDEuNDggViAyOS45MSB6IE0gMTAuODA5IDAuMDggYyA1Ljk2MyAwIDEwLjgwOSA0Ljg0NiAxMC44MDkgMTAuODE5IGMgMCA1Ljk2NyAtNC44NDYgMTAuODEzIC0xMC44MDkgMTAuODEzIEMgNC44MzIgMjEuNzEyIDAgMTYuODY2IDAgMTAuODk5IEMgMCA0LjkyNiA0LjgzMiAwLjA4IDEwLjgwOSAwLjA4IiBzdHlsZT0ic3Ryb2tlOiBub25lOyBzdHJva2Utd2lkdGg6IDE7IHN0cm9rZS1kYXNoYXJyYXk6IG5vbmU7IHN0cm9rZS1saW5lY2FwOiBidXR0OyBzdHJva2UtbGluZWpvaW46IG1pdGVyOyBzdHJva2UtbWl0ZXJsaW1pdDogMTA7IGZpbGw6ICNGRkZGRkY7IGZpbGwtcnVsZTogbm9uemVybzsgb3BhY2l0eTogMTsiIHRyYW5zZm9ybT0iIG1hdHJpeCgxIDAgMCAxIDAgMCkgIiBzdHJva2UtbGluZWNhcD0icm91bmQiIC8+Cgk8cGF0aCBkPSJNIDMxLjgzNSAyOS45MSBoIDE3Ljg5IHYgOC4yMDYgaCAwLjI1NSBjIDIuNDkgLTQuNzIgOC41NzYgLTkuNjkyIDE3LjY0NyAtOS42OTIgQyA4Ni41MTQgMjguNDI0IDkwIDQwLjg0OSA5MCA1Ny4wMDcgViA4OS45MiBIIDcxLjM1NyBWIDYwLjczNyBjIDAgLTYuOTYxIC0wLjEyMSAtMTUuOTEyIC05LjY5MiAtMTUuOTEyIGMgLTkuNzA2IDAgLTExLjE4NyA3LjU4NyAtMTEuMTg3IDE1LjQxMiBWIDg5LjkyIEggMzEuODM1IFYgMjkuOTEgeiIgc3R5bGU9InN0cm9rZTogbm9uZTsgc3Ryb2tlLXdpZHRoOiAxOyBzdHJva2UtZGFzaGFycmF5OiBub25lOyBzdHJva2UtbGluZWNhcDogYnV0dDsgc3Ryb2tlLWxpbmVqb2luOiBtaXRlcjsgc3Ryb2tlLW1pdGVybGltaXQ6IDEwOyBmaWxsOiAjRkZGRkZGOyBmaWxsLXJ1bGU6IG5vbnplcm87IG9wYWNpdHk6IDE7IiB0cmFuc2Zvcm09IiBtYXRyaXgoMSAwIDAgMSAwIDApICIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiAvPgo8L2c+Cjwvc3ZnPg==)",
         }}
       ></span>
     ),
+    href: "https://www.linkedin.com/in/exploreraadi/",
   },
 ];
 
@@ -325,24 +333,6 @@ const MoreIcon = () => {
         d="M6.75 12a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0ZM12.75 12a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0ZM18.75 12a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0Z"
       />
     </motion.svg>
-  );
-};
-
-const MagnifyingGlassIcon = () => {
-  return (
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      fill="none"
-      viewBox="0 0 24 24"
-      stroke-width="1.5"
-      stroke="currentColor"
-    >
-      <path
-        strokeLinecap="round"
-        strokeLinejoin="round"
-        d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607ZM10.5 7.5v6m3-3h-6"
-      />
-    </svg>
   );
 };
 
@@ -377,6 +367,87 @@ const XIcon = ({ className }: { className: string }) => {
           fill="#FFFFFF"
           d="M13.158 2.058h2.248l-4.913 5.435 5.78 7.395h-4.525l-3.545-4.485-4.056 4.485h-2.25l5.255-5.813-5.545-7.017h4.64l3.205 4.1 3.706-4.1Zm-.79 11.527h1.246L5.57 3.293H4.233l8.135 10.292Z"
         />
+      </g>
+    </svg>
+  );
+};
+
+const AudioIcon = () => {
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      // xmlns:xlink="http://www.w3.org/1999/xlink"
+      viewBox="0 0 36 36"
+      // preserveAspectRatio="xMidYMid meet"
+      // style="width: 100%; height: 100%; transform: translate3d(0px, 0px, 0px); content-visibility: visible;"
+    >
+      {/* <defs>
+        <clipPath id="__lottie_element_2">
+          <rect width="36" height="36" x="0" y="0"></rect>
+        </clipPath>
+      </defs> */}
+      <g clip-path="url(#__lottie_element_2)">
+        <g
+          transform="matrix(1,0,0,1,10,10)"
+          opacity="1"
+          // style="display: block;"
+        >
+          <g opacity="1" transform="matrix(1,0,0,1,0,0)">
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              fill-opacity="0"
+              stroke="rgb(255,255,255)"
+              stroke-opacity="0.96"
+              stroke-width="1.5"
+              d=" M2,6.666749954223633 C2,6.666749954223633 2,9.333410263061523 2,9.333410263061523"
+            ></path>
+          </g>
+          <g opacity="1" transform="matrix(1,0,0,1,0,0)">
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              fill-opacity="0"
+              stroke="rgb(255,255,255)"
+              stroke-opacity="0.96"
+              stroke-width="1.5"
+              d=" M5,7.333250045776367 C5,7.333250045776367 5,8.666589736938477 5,8.666589736938477"
+            ></path>
+          </g>
+          <g opacity="1" transform="matrix(1,0,0,1,0,0)">
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              fill-opacity="0"
+              stroke="rgb(255,255,255)"
+              stroke-opacity="0.96"
+              stroke-width="1.5"
+              d=" M8,4 C8,4 8,12 8,12"
+            ></path>
+          </g>
+          <g opacity="1" transform="matrix(1,0,0,1,0,0)">
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              fill-opacity="0"
+              stroke="rgb(255,255,255)"
+              stroke-opacity="0.96"
+              stroke-width="1.5"
+              d=" M11,2 C11,2 11,14 11,14"
+            ></path>
+          </g>
+          <g opacity="1" transform="matrix(1,0,0,1,0,0)">
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              fill-opacity="0"
+              stroke="rgb(255,255,255)"
+              stroke-opacity="0.96"
+              stroke-width="1.5"
+              d=" M14,6.666749954223633 C14,6.666749954223633 14,9.333410263061523 14,9.333410263061523"
+            ></path>
+          </g>
+        </g>
       </g>
     </svg>
   );
