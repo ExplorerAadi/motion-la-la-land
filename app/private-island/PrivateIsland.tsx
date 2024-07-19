@@ -224,33 +224,33 @@ const ExpandedStageThree = ({
             }}
           >
             {link.icon()}
-            <AnimatePresence>
-              {hoveredIndex === index && (
-                <>
-                  <motion.div
-                    className="absolute top-0 left-0 w-full h-full bg-zinc-700 -z-10"
-                    style={{ borderRadius: 32 }}
-                    variants={variants}
-                    initial="elementHidden"
-                    animate="visible"
-                    exit="elementHidden"
-                    transition={{ duration: 0.4, type: "spring" }}
-                    key={`${link.title}-bg`}
-                  ></motion.div>
-                  <motion.div
-                    className="text-white pl-1.5 text-xs"
-                    variants={variants}
-                    initial="elementHidden"
-                    animate="visible"
-                    exit="elementHidden"
-                    transition={{ duration: 0.4, type: "spring" }}
-                    key={`${link.title}-text`}
-                  >
-                    {link.title}
-                  </motion.div>
-                </>
-              )}
-            </AnimatePresence>
+            {/* <AnimatePresence> */}
+            {hoveredIndex === index && (
+              <>
+                <motion.div
+                  className="absolute top-0 left-0 w-full h-full bg-zinc-700 -z-10"
+                  style={{ borderRadius: 32 }}
+                  variants={variants}
+                  initial="elementHidden"
+                  animate="visible"
+                  exit="elementHidden"
+                  transition={{ duration: 0.4, type: "spring" }}
+                  key={`${link.title}-bg`}
+                ></motion.div>
+                <motion.div
+                  className="text-white pl-1.5 text-xs"
+                  variants={variants}
+                  initial="elementHidden"
+                  animate="visible"
+                  exit="elementHidden"
+                  transition={{ duration: 0.4, type: "spring" }}
+                  key={`${link.title}-text`}
+                >
+                  {link.title}
+                </motion.div>
+              </>
+            )}
+            {/* </AnimatePresence> */}
           </motion.a>
         ))}
       </motion.div>
