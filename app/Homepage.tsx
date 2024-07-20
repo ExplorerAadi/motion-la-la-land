@@ -51,6 +51,20 @@ export const Homepage = () => {
           redirectLabel="Demo"
           redirectLink="/smart-navbar"
         />
+        <Card
+          title="Art Gallery"
+          description="An art gallery with images arranged in a masonry grid and an iPhone like opening closing animation."
+          media={`${cloudinaryDomain}/${process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME}/video/upload/f_auto:video,q_auto/art-gallery`}
+          redirectLabel="Demo"
+          redirectLink="/modal-animation"
+        />
+        <Card
+          title="Private Island"
+          description="A private island of links and bio based on the dynamic island concept of iPhones and inspired by the private island of @konsfyi."
+          media={`${cloudinaryDomain}/${process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME}/video/upload/f_auto:video,q_auto/private-island-demo`}
+          redirectLabel="Demo"
+          redirectLink="/private-island"
+        />
         {/* <RedirectLink label="Custom Animation" href="/custom-animation" /> */}
         {/* <RedirectLink label="Stateless Animation" href="/stateless-animation" /> */}
       </div>
