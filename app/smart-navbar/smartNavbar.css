@@ -4,5 +4,5 @@ td {
 }
 
 .stick {
-  @apply sticky top-0 py-4 bg-[#010101] -mx-2 transition-all ease-in duration-200;
+  @apply sticky top-0 py-4 bg-[#010101] transition-all ease-out duration-300;
 }
