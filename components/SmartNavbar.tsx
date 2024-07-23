@@ -74,12 +74,16 @@ export const FloatingNav = ({
     <AnimatePresence mode="wait">
       <motion.div
         initial={{
-          opacity: 1,
-          y: -100,
+          opacity: 0,
+          y: -40,
         }}
         animate={{
-          y: visible ? 0 : -100,
+          y: visible ? 0 : -40,
           opacity: visible ? 1 : 0,
+        }}
+        exit={{
+          opacity: 0,
+          y: -40,
         }}
         transition={{
           duration: 0.2,

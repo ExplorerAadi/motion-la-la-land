@@ -1,7 +1,7 @@
 "use client";
 
 import { AnimatePresence, motion } from "framer-motion";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 
 enum EXPANDED_STATE {
   COLLAPSED,
@@ -38,6 +38,15 @@ export const PrivateIsland = () => {
   const [expandedStage, setExpandedStage] = useState<EXPANDED_STATE>(
     EXPANDED_STATE.COLLAPSED
   );
+  const [shouldUnmount, setShouldUnmount] = useState(false);
+
+  const changeExpandedStage = useCallback((value: EXPANDED_STATE) => {
+    setShouldUnmount(true);
+    setTimeout(() => {
+      setExpandedStage(value);
+      setShouldUnmount(false);
+    }, 300);
+  }, []);
 
   useEffect(() => {
     const timer = setTimeout(
@@ -50,20 +59,24 @@ export const PrivateIsland = () => {
 
   return (
     <div className="flex items-center justify-center w-full h-screen cursor-pointer font-[Inter]">
-      <AnimatePresence>
-        {expandedStage === EXPANDED_STATE.COLLAPSED && (
-          <BaseDynamicIsland setExpandedStage={setExpandedStage} />
-        )}
-        {expandedStage === EXPANDED_STATE.EXPANDED_1 && (
-          <ExpandedStageOne setExpandedStage={setExpandedStage} />
-        )}
-        {expandedStage === EXPANDED_STATE.EXPANDED_2 && (
-          <ExpandedStageTwo setExpandedStage={setExpandedStage} />
-        )}
-        {expandedStage === EXPANDED_STATE.EXPANDED_3 && (
-          <ExpandedStageThree setExpandedStage={setExpandedStage} />
-        )}
-      </AnimatePresence>
+      {expandedStage === EXPANDED_STATE.COLLAPSED && (
+        <BaseDynamicIsland setExpandedStage={setExpandedStage} />
+      )}
+      {expandedStage === EXPANDED_STATE.EXPANDED_1 && (
+        <ExpandedStageOne
+          changeExpandedStage={changeExpandedStage}
+          shouldUnmount={shouldUnmount}
+        />
+      )}
+      {expandedStage === EXPANDED_STATE.EXPANDED_2 && (
+        <ExpandedStageTwo setExpandedStage={setExpandedStage} />
+      )}
+      {expandedStage === EXPANDED_STATE.EXPANDED_3 && (
+        <ExpandedStageThree
+          changeExpandedStage={changeExpandedStage}
+          shouldUnmount={shouldUnmount}
+        />
+      )}
     </div>
   );
 };
@@ -84,9 +97,11 @@ const BaseDynamicIsland = ({
 };
 
 const ExpandedStageOne = ({
-  setExpandedStage,
+  shouldUnmount,
+  changeExpandedStage,
 }: {
-  setExpandedStage: (value: EXPANDED_STATE) => void;
+  shouldUnmount: boolean;
+  changeExpandedStage: (value: EXPANDED_STATE) => void;
 }) => {
   return (
     <motion.div
@@ -94,62 +109,68 @@ const ExpandedStageOne = ({
       layoutId="island-container"
       style={{ borderRadius: 36 }}
     >
-      <motion.button
-        className="w-9 h-9 bg-slate-600"
-        onClick={() => setExpandedStage(EXPANDED_STATE.COLLAPSED)}
-        style={{ borderRadius: 999 }}
-        variants={variants}
-        initial="leftElementHidden"
-        animate="visible"
-        exit="leftElementHidden"
-        transition={{ delay: 0.2, duration: 0.3, type: "spring" }}
-        key="profile-button"
-      >
-        <img
-          src="/cropped-profile-pic.JPG"
-          className="w-full h-full overflow-hidden"
-          style={{ borderRadius: 999 }}
-          alt="Profile"
-        />
-      </motion.button>
-      <motion.div
-        className="flex flex-col pr-12 justify-center"
-        variants={variants}
-        initial="leftElementHidden"
-        animate="visible"
-        exit="leftElementHidden"
-        transition={{ delay: 0.2, duration: 0.3, type: "spring" }}
-        key="intro-text"
-      >
-        <p className="text-xs text-neutral-500 leading-tight">
-          Hello, I&apos;m
-        </p>
-        <h3 className="text-sm text-white leading-tight">Aditya</h3>
-      </motion.div>
-      <motion.div
-        className="flex justify-center space-x-2"
-        variants={variants}
-        initial="rightElementHidden"
-        animate="visible"
-        exit="rightElementHidden"
-        transition={{ delay: 0.2, duration: 0.3, type: "spring" }}
-        key="options-button"
-      >
-        <button
-          className="w-9 h-9 bg-[#F57202]"
-          style={{ borderRadius: 999 }}
-          onClick={() => setExpandedStage(EXPANDED_STATE.EXPANDED_2)}
-        >
-          <AudioIcon />
-        </button>
-        <button
-          className="w-9 h-9 bg-[#008BF5] p-2"
-          style={{ borderRadius: 999 }}
-          onClick={() => setExpandedStage(EXPANDED_STATE.EXPANDED_3)}
-        >
-          <MoreIcon />
-        </button>
-      </motion.div>
+      <AnimatePresence>
+        {!shouldUnmount && (
+          <>
+            <motion.button
+              className="w-9 h-9 bg-slate-600"
+              onClick={() => changeExpandedStage(EXPANDED_STATE.COLLAPSED)}
+              style={{ borderRadius: 999 }}
+              variants={variants}
+              initial="leftElementHidden"
+              animate="visible"
+              exit="leftElementHidden"
+              transition={{ delay: 0.2, duration: 0.3, type: "spring" }}
+              key="profile-button"
+            >
+              <img
+                src="/cropped-profile-pic.JPG"
+                className="w-full h-full overflow-hidden"
+                style={{ borderRadius: 999 }}
+                alt="Profile"
+              />
+            </motion.button>
+            <motion.div
+              className="flex flex-col pr-12 justify-center"
+              variants={variants}
+              initial="leftElementHidden"
+              animate="visible"
+              exit="leftElementHidden"
+              transition={{ delay: 0.2, duration: 0.3, type: "spring" }}
+              key="intro-text"
+            >
+              <p className="text-xs text-neutral-500 leading-tight">
+                Hello, I&apos;m
+              </p>
+              <h3 className="text-sm text-white leading-tight">Aditya</h3>
+            </motion.div>
+            <motion.div
+              className="flex justify-center space-x-2"
+              variants={variants}
+              initial="rightElementHidden"
+              animate="visible"
+              exit="rightElementHidden"
+              transition={{ delay: 0.2, duration: 0.3, type: "spring" }}
+              key="options-button"
+            >
+              <button
+                className="w-9 h-9 bg-[#F57202]"
+                style={{ borderRadius: 999 }}
+                onClick={() => changeExpandedStage(EXPANDED_STATE.EXPANDED_2)}
+              >
+                <AudioIcon />
+              </button>
+              <button
+                className="w-9 h-9 bg-[#008BF5] p-2"
+                style={{ borderRadius: 999 }}
+                onClick={() => changeExpandedStage(EXPANDED_STATE.EXPANDED_3)}
+              >
+                <MoreIcon />
+              </button>
+            </motion.div>
+          </>
+        )}
+      </AnimatePresence>
     </motion.div>
   );
 };
@@ -170,8 +191,6 @@ const ExpandedStageTwo = ({
         className="text-sm text-neutral-500 text-left leading-normal tracking-tight"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
-        exit={{ opacity: 0 }}
-        key="bio"
       >
         It's been almost <span className="text-white">5 years</span> since I got
         into Frontend Development. In those years, I've developed user
@@ -187,9 +206,11 @@ const ExpandedStageTwo = ({
 };
 
 const ExpandedStageThree = ({
-  setExpandedStage,
+  shouldUnmount,
+  changeExpandedStage,
 }: {
-  setExpandedStage: (value: EXPANDED_STATE) => void;
+  shouldUnmount: boolean;
+  changeExpandedStage: (value: EXPANDED_STATE) => void;
 }) => {
   const [hoveredIndex, setHoveredIndex] = useState(-1);
 
@@ -199,61 +220,63 @@ const ExpandedStageThree = ({
       layoutId="island-container"
       style={{ borderRadius: 36 }}
     >
-      <motion.div
-        className="flex justify-center items-center p-1.5"
-        variants={variants}
-        initial="elementHidden"
-        animate="visible"
-        exit="elementHidden"
-        transition={{ delay: 0.2, duration: 0.3, type: "spring" }}
-      >
-        {links.map((link, index) => (
-          <motion.a
-            key={link.title}
-            href={link.title === links[0].title ? undefined : link.href}
-            target="_blank"
-            rel="noopener noreferrer"
-            layout
-            className="flex items-center relative z-10 px-2.5"
-            style={{ height: 24 }}
-            onHoverStart={() => setHoveredIndex(index)}
-            onHoverEnd={() => setHoveredIndex(-1)}
-            onClick={() => {
-              link.title === links[0].title &&
-                setExpandedStage(EXPANDED_STATE.EXPANDED_1);
-            }}
+      <AnimatePresence>
+        {!shouldUnmount && (
+          <motion.div
+            className="flex justify-center items-center p-1.5"
+            variants={variants}
+            initial="elementHidden"
+            animate="visible"
+            exit="elementHidden"
+            transition={{ delay: 0.2, duration: 0.3, type: "spring" }}
           >
-            {link.icon()}
-            {/* <AnimatePresence> */}
-            {hoveredIndex === index && (
-              <>
-                <motion.div
-                  className="absolute top-0 left-0 w-full h-full bg-zinc-700 -z-10"
-                  style={{ borderRadius: 32 }}
-                  variants={variants}
-                  initial="elementHidden"
-                  animate="visible"
-                  exit="elementHidden"
-                  transition={{ duration: 0.4, type: "spring" }}
-                  key={`${link.title}-bg`}
-                ></motion.div>
-                <motion.div
-                  className="text-white pl-1.5 text-xs"
-                  variants={variants}
-                  initial="elementHidden"
-                  animate="visible"
-                  exit="elementHidden"
-                  transition={{ duration: 0.4, type: "spring" }}
-                  key={`${link.title}-text`}
-                >
-                  {link.title}
-                </motion.div>
-              </>
-            )}
-            {/* </AnimatePresence> */}
-          </motion.a>
-        ))}
-      </motion.div>
+            {links.map((link, index) => (
+              <motion.a
+                key={link.title}
+                href={link.title === links[0].title ? undefined : link.href}
+                target="_blank"
+                rel="noopener noreferrer"
+                layout
+                className="flex items-center relative z-10 px-2.5"
+                style={{ height: 24 }}
+                onHoverStart={() => setHoveredIndex(index)}
+                onHoverEnd={() => setHoveredIndex(-1)}
+                onClick={() => {
+                  link.title === links[0].title &&
+                    changeExpandedStage(EXPANDED_STATE.EXPANDED_1);
+                }}
+              >
+                {link.icon()}
+                {hoveredIndex === index && (
+                  <>
+                    <motion.div
+                      className="absolute top-0 left-0 w-full h-full bg-zinc-700 -z-10"
+                      style={{ borderRadius: 32 }}
+                      variants={variants}
+                      initial="elementHidden"
+                      animate="visible"
+                      exit="elementHidden"
+                      transition={{ duration: 0.3, type: "spring" }}
+                      key={`${link.title}-bg`}
+                    ></motion.div>
+                    <motion.div
+                      className="text-white pl-1.5 text-xs"
+                      variants={variants}
+                      initial="elementHidden"
+                      animate="visible"
+                      exit="elementHidden"
+                      transition={{ duration: 0.3, type: "spring" }}
+                      key={`${link.title}-text`}
+                    >
+                      {link.title}
+                    </motion.div>
+                  </>
+                )}
+              </motion.a>
+            ))}
+          </motion.div>
+        )}
+      </AnimatePresence>
     </motion.div>
   );
 };
