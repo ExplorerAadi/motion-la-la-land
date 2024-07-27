@@ -1,10 +1,18 @@
 "use client";
+import { motion, useDragControls } from "framer-motion";
 
 const BaseCard = () => {
+  const controls = useDragControls();
+
   return (
-    <div className="flex flex-col items-center justify-center bg-white rounded-lg w-72 h-96 shadow-xl">
+    <motion.div
+      onPointerDown={controls.start}
+      drag={true}
+      dragControls={controls}
+      className="flex flex-col items-center justify-center bg-white rounded-lg w-72 h-96 shadow-xl"
+    >
       <h3 className="text-lg">The greatest trick</h3>
-    </div>
+    </motion.div>
   );
 };
 
