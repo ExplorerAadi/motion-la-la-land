@@ -1,22 +1,23 @@
 "use client";
+
 import { motion } from "framer-motion";
-import { useRef, useState } from "react";
+import { useState } from "react";
+import { useWindowSize } from "usehooks-ts";
 
 const BaseCard = ({
   index,
-  xPercent,
-  yPercent,
+  x,
+  y,
+  width,
+  height,
 }: {
   index: number;
-  xPercent: string;
-  yPercent: string;
+  x: number;
+  y: number;
+  width: number;
+  height: number;
 }) => {
-  const [point, setPoint] = useState({
-    x: (Number(xPercent) / 100) * window?.innerWidth,
-    y: (Number(yPercent) / 100) * window?.innerHeight,
-  });
-
-  console.log(point);
+  const [point, setPoint] = useState({ x, y });
 
   return (
     <motion.div
@@ -24,9 +25,9 @@ const BaseCard = ({
       dragMomentum={false}
       dragConstraints={{
         left: 0,
-        right: window.innerWidth - 300,
+        right: width - 300,
         top: 0,
-        bottom: window.innerHeight - 400,
+        bottom: height - 400,
       }}
       className="flex flex-col items-center justify-center bg-white rounded-lg w-72 h-96 shadow-xl"
       style={{ position: "absolute", top: 0, left: 0, x: point.x, y: point.y }}
@@ -41,7 +42,6 @@ const BaseCard = ({
       transition={{ duration: 0.8, type: "spring", delay: 0.2 * index }}
       onDrag={(_, info) => {
         if (info.point.x > 200 || info.point.y > 200) {
-          console.log(info);
           setPoint({
             x: info.point.x,
             y: info.point.y,
@@ -55,16 +55,58 @@ const BaseCard = ({
 };
 
 export const BaseCardsStacked = () => {
-  const ref = useRef<HTMLDivElement>(null);
+  const { width, height } = useWindowSize();
+
+  const getX = (xPercent: number) => {
+    return (xPercent / 100) * width;
+  };
+  const getY = (yPercent: number) => {
+    return (yPercent / 100) * height;
+  };
 
   return (
     <div className="w-screen h-screen flex items-center justify-center bg-slate-950 overflow-hidden">
-      <div className="relative h-full w-full" ref={ref}>
-        <BaseCard key={1} index={0} xPercent="30" yPercent="41" />
-        <BaseCard key={2} index={1} xPercent="36" yPercent="35" />
-        <BaseCard key={3} index={2} xPercent="42" yPercent="29" />
-        <BaseCard key={4} index={3} xPercent="48" yPercent="38" />
-        <BaseCard key={5} index={4} xPercent="54" yPercent="44" />
+      <div className="relative h-full w-full">
+        <BaseCard
+          key={1}
+          index={0}
+          x={getX(30)}
+          y={getY(41)}
+          width={width}
+          height={height}
+        />
+        <BaseCard
+          key={2}
+          index={1}
+          x={getX(36)}
+          y={getY(35)}
+          width={width}
+          height={height}
+        />
+        <BaseCard
+          key={3}
+          index={2}
+          x={getX(42)}
+          y={getY(29)}
+          width={width}
+          height={height}
+        />
+        <BaseCard
+          key={4}
+          index={3}
+          x={getX(48)}
+          y={getY(38)}
+          width={width}
+          height={height}
+        />
+        <BaseCard
+          key={5}
+          index={4}
+          x={getX(54)}
+          y={getY(44)}
+          width={width}
+          height={height}
+        />
       </div>
     </div>
   );
