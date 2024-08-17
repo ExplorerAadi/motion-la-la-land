@@ -1,6 +1,6 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { motion, useMotionValue } from "framer-motion";
 import { useState } from "react";
 import { useWindowSize } from "usehooks-ts";
 
@@ -17,40 +17,69 @@ const BaseCard = ({
   width: number;
   height: number;
 }) => {
-  const [point, setPoint] = useState({ x, y });
+  const point = useMotionValue({ x, y });
+  const [isFlipped, setIsFlipped] = useState(false);
+  const [isAnimationComplete, setIsAnimationComplete] = useState(false);
 
   return (
-    <motion.div
+    <motion.button
       drag={true}
       dragMomentum={false}
       dragConstraints={{
-        left: 0,
+        left: 10,
         right: width - 300,
-        top: 0,
+        top: 10,
         bottom: height - 400,
       }}
-      className="flex flex-col items-center justify-center bg-white rounded-lg w-72 h-96 shadow-xl"
-      style={{ position: "absolute", top: 0, left: 0, x: point.x, y: point.y }}
+      className="flex flex-col items-center justify-center bg-white rounded-lg w-72 h-96 shadow-xl cursor-pointer"
+      style={{
+        position: "absolute",
+        top: 0,
+        left: 0,
+        x: point.get().x,
+        y: point.get().y,
+      }}
       initial={{
         opacity: 0,
-        y: 800,
+        // y: 800,
       }}
       animate={{
         opacity: 1,
-        y: point.y,
+        // y: point.y,
+        rotateY: isFlipped ? 180 : 0,
+        scale: isFlipped ? 2.5 : 1,
+        zIndex: isFlipped ? 999 : undefined,
+        x: isFlipped ? width / 2 - 100 : point.get().x,
+        y: isFlipped ? height / 2 - 150 : point.get().y,
       }}
       transition={{ duration: 0.8, type: "spring", delay: 0.2 * index }}
+      onMouseDown={() => (window.xyValue = point.get())}
+      onMouseUp={() => {
+        if (
+          Math.abs(point.get().x - window.xyValue.x) < 2 ||
+          Math.abs(point.get().y - window.xyValue.y) < 2
+        ) {
+          setIsFlipped(true);
+        }
+      }}
       onDrag={(_, info) => {
         if (info.point.x > 200 || info.point.y > 200) {
-          setPoint({
+          point.set({
             x: info.point.x,
             y: info.point.y,
           });
         }
       }}
+      onAnimationComplete={() => setIsAnimationComplete(true)}
+      onAnimationStart={() => setIsAnimationComplete(false)}
     >
-      <h3 className="text-lg">The greatest trick</h3>
-    </motion.div>
+      <h3
+        className="text-lg"
+        style={{ transform: isFlipped ? "rotateY(-180deg)" : "" }}
+      >
+        {isAnimationComplete && isFlipped ? "Got you!" : "The greatest trick"}
+      </h3>
+    </motion.button>
   );
 };
 

@@ -1,5 +1,11 @@
 import "../styles/globals.css";
 
+declare global {
+  interface Window {
+    xyValue: { x: number; y: number };
+  }
+}
+
 export default function RootLayout({
   children,
 }: {
