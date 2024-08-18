@@ -1,28 +1,77 @@
 "use client";
 
-import { motion, useMotionValue } from "framer-motion";
-import { useState } from "react";
+import {
+  motion,
+  useAnimate,
+  useMotionValue,
+  useMotionValueEvent,
+} from "framer-motion";
+import { useEffect, useState } from "react";
 import { useWindowSize } from "usehooks-ts";
+import { classNames } from "../utils";
 
 const BaseCard = ({
   index,
-  x,
-  y,
+  position,
   width,
   height,
+  flippedCardIdx,
+  setFlippedCardIdx,
 }: {
   index: number;
-  x: number;
-  y: number;
+  position: { x: number; y: number };
   width: number;
   height: number;
+  flippedCardIdx: number;
+  setFlippedCardIdx: React.Dispatch<React.SetStateAction<number>>;
 }) => {
-  const point = useMotionValue({ x, y });
-  const [isFlipped, setIsFlipped] = useState(false);
+  const x = useMotionValue(position.x);
+  const y = useMotionValue(position.y);
   const [isAnimationComplete, setIsAnimationComplete] = useState(false);
+  const isFlipped = flippedCardIdx === index;
+
+  const [scope, animate] = useAnimate();
+
+  useEffect(() => {
+    animate(
+      scope.current,
+      {
+        opacity: 1,
+        rotateY: isFlipped ? 180 : 0,
+        scale: isFlipped ? 2.5 : 1,
+        zIndex: isFlipped ? 999 : undefined,
+        x: isFlipped ? width / 2 - 100 : x.get(),
+        y: isFlipped ? height / 2 - 150 : y.get(),
+      },
+      {
+        duration: 0.2,
+        type: "spring",
+        stiffness: 120,
+        delay: index > 0 ? 0.2 * index : 0,
+      }
+    );
+    animate("h3", { rotateY: isFlipped ? -180 : 0 });
+  }, [isFlipped]);
+
+  useMotionValueEvent(x, "change", () => {
+    animate(
+      scope.current,
+      { x },
+      { type: "spring", stiffness: 1000, damping: 10 }
+    );
+  });
+
+  useMotionValueEvent(y, "change", () => {
+    animate(
+      scope.current,
+      { y },
+      { type: "spring", stiffness: 1000, damping: 10 }
+    );
+  });
 
   return (
     <motion.button
+      ref={scope}
       drag={true}
       dragMomentum={false}
       dragConstraints={{
@@ -31,60 +80,48 @@ const BaseCard = ({
         top: 10,
         bottom: height - 400,
       }}
-      className="flex flex-col items-center justify-center bg-white rounded-lg w-72 h-96 shadow-xl cursor-pointer"
+      className={classNames(
+        "flex flex-col items-center justify-center bg-white rounded-lg w-72 h-96 shadow-xl",
+        isFlipped ? "cursor-grabbing" : "cursor-pointer"
+      )}
       style={{
         position: "absolute",
         top: 0,
         left: 0,
-        x: point.get().x,
-        y: point.get().y,
       }}
       initial={{
         opacity: 0,
-        // y: 800,
+        x: width / 2,
+        y: height + 100,
       }}
-      animate={{
-        opacity: 1,
-        // y: point.y,
-        rotateY: isFlipped ? 180 : 0,
-        scale: isFlipped ? 2.5 : 1,
-        zIndex: isFlipped ? 999 : undefined,
-        x: isFlipped ? width / 2 - 100 : point.get().x,
-        y: isFlipped ? height / 2 - 150 : point.get().y,
-      }}
-      transition={{ duration: 0.8, type: "spring", delay: 0.2 * index }}
-      onMouseDown={() => (window.xyValue = point.get())}
+      onMouseDown={() => (window.xyValue = { x: x.get(), y: y.get() })}
       onMouseUp={() => {
         if (
-          Math.abs(point.get().x - window.xyValue.x) < 2 ||
-          Math.abs(point.get().y - window.xyValue.y) < 2
+          Math.abs(x.get() - window.xyValue.x) < 2 ||
+          Math.abs(y.get() - window.xyValue.y) < 2
         ) {
-          setIsFlipped(true);
+          setFlippedCardIdx(index);
         }
       }}
       onDrag={(_, info) => {
         if (info.point.x > 200 || info.point.y > 200) {
-          point.set({
-            x: info.point.x,
-            y: info.point.y,
-          });
+          x.set(info.point.x);
+          y.set(info.point.y);
         }
       }}
       onAnimationComplete={() => setIsAnimationComplete(true)}
       onAnimationStart={() => setIsAnimationComplete(false)}
     >
-      <h3
-        className="text-lg"
-        style={{ transform: isFlipped ? "rotateY(-180deg)" : "" }}
-      >
+      <motion.h3 className="text-lg" initial={{}}>
         {isAnimationComplete && isFlipped ? "Got you!" : "The greatest trick"}
-      </h3>
+      </motion.h3>
     </motion.button>
   );
 };
 
 export const BaseCardsStacked = () => {
   const { width, height } = useWindowSize();
+  const [flippedCardIdx, setFlippedCardIdx] = useState(-1);
 
   const getX = (xPercent: number) => {
     return (xPercent / 100) * width;
@@ -94,49 +131,26 @@ export const BaseCardsStacked = () => {
   };
 
   return (
-    <div className="w-screen h-screen flex items-center justify-center bg-slate-950 overflow-hidden">
-      <div className="relative h-full w-full">
+    <div className="w-screen h-screen flex items-center justify-center bg-slate-950 overflow-hidden relative">
+      {positions.map((position, idx) => (
         <BaseCard
-          key={1}
-          index={0}
-          x={getX(30)}
-          y={getY(41)}
+          key={idx}
+          index={idx}
+          position={{ x: getX(position.x), y: getY(position.y) }}
           width={width}
           height={height}
+          flippedCardIdx={flippedCardIdx}
+          setFlippedCardIdx={setFlippedCardIdx}
         />
-        <BaseCard
-          key={2}
-          index={1}
-          x={getX(36)}
-          y={getY(35)}
-          width={width}
-          height={height}
-        />
-        <BaseCard
-          key={3}
-          index={2}
-          x={getX(42)}
-          y={getY(29)}
-          width={width}
-          height={height}
-        />
-        <BaseCard
-          key={4}
-          index={3}
-          x={getX(48)}
-          y={getY(38)}
-          width={width}
-          height={height}
-        />
-        <BaseCard
-          key={5}
-          index={4}
-          x={getX(54)}
-          y={getY(44)}
-          width={width}
-          height={height}
-        />
-      </div>
+      ))}
     </div>
   );
 };
+
+const positions = [
+  { x: 30, y: 41 },
+  { x: 36, y: 35 },
+  { x: 42, y: 29 },
+  { x: 48, y: 38 },
+  { x: 54, y: 44 },
+];
