@@ -32,7 +32,7 @@ export const DeckCard = ({
 
   const [scope, animate] = useAnimate();
 
-  const springConfig = { damping: 10, stiffness: 120 };
+  const springConfig = { damping: 12, stiffness: 90 };
   const dragControls = useSpring(x, springConfig);
   const dragControlsY = useSpring(y, springConfig);
 
@@ -60,7 +60,7 @@ export const DeckCard = ({
     animate(
       scope.current,
       { x },
-      { type: "spring", stiffness: 1000, damping: 10, delay: 0.2 }
+      { type: "spring", stiffness: 90, damping: 12 }
     );
   });
 
@@ -68,7 +68,7 @@ export const DeckCard = ({
     animate(
       scope.current,
       { y },
-      { type: "spring", stiffness: 1000, damping: 10, delay: 0.2 }
+      { type: "spring", stiffness: 90, damping: 12 }
     );
   });
 
@@ -77,7 +77,7 @@ export const DeckCard = ({
       ref={scope}
       drag={true}
       dragElastic={0.1}
-      dragTransition={{ power: 0.2, timeConstant: 120 }}
+      // dragTransition={{ power: 0.2, timeConstant: 120 }}
       dragMomentum={false}
       dragConstraints={{
         left: 10,
