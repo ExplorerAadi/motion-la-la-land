@@ -39,7 +39,10 @@ export const BaseCardsStacked = () => {
           setFlippedCardIdx={setFlippedCardIdx}
         />
       ))}
-      <button className="absolute z-[999] bg-neutral-800 text-white rounded-full p-3 left-1/2 top-8 -translate-x-1/2 -translate-y-1/2 cursor-pointer">
+      <button
+        className="absolute z-[999] bg-neutral-800 text-white rounded-full p-3 left-1/2 top-8 -translate-x-1/2 -translate-y-1/2 cursor-pointer"
+        onClick={() => setFlippedCardIdx(-1)}
+      >
         <CloseIcon className="h-6 font-semibold" />
       </button>
     </div>

@@ -25,16 +25,16 @@ export const DeckCard = ({
   flippedCardIdx: number;
   setFlippedCardIdx: React.Dispatch<React.SetStateAction<number>>;
 }) => {
-  const x = useMotionValue(position.x);
-  const y = useMotionValue(position.y);
+  // const x = useMotionValue(position.x);
+  // const y = useMotionValue(position.y);
   const [isAnimationComplete, setIsAnimationComplete] = useState(false);
   const isFlipped = flippedCardIdx === index;
 
   const [scope, animate] = useAnimate();
 
-  const springConfig = { damping: 12, stiffness: 90 };
-  const dragControls = useSpring(x, springConfig);
-  const dragControlsY = useSpring(y, springConfig);
+  const springConfig = { damping: 12, stiffness: 100 };
+  const dragControls = useSpring(position.x, springConfig);
+  const dragControlsY = useSpring(position.y, springConfig);
 
   useEffect(() => {
     animate(
@@ -43,8 +43,8 @@ export const DeckCard = ({
         opacity: 1,
         rotateY: isFlipped ? 180 : 0,
         scale: isFlipped ? 1.8 : 1,
-        x: isFlipped ? width / 2 - 100 : x.get(),
-        y: isFlipped ? height / 2 - 150 : y.get(),
+        x: isFlipped ? width / 2 - 100 : dragControls.get(),
+        y: isFlipped ? height / 2 - 150 : dragControlsY.get(),
       },
       {
         duration: 0.2,
@@ -56,28 +56,34 @@ export const DeckCard = ({
     animate("h3", { rotateY: isFlipped ? -180 : 0 });
   }, [isFlipped]);
 
-  useMotionValueEvent(x, "change", () => {
-    animate(
-      scope.current,
-      { x },
-      { type: "spring", stiffness: 90, damping: 12 }
-    );
-  });
+  // useMotionValueEvent(x, "change", () => {
+  //   animate(
+  //     scope.current,
+  //     { x },
+  //     { type: "spring", stiffness: 90, damping: 12 }
+  //   );
+  // });
 
-  useMotionValueEvent(y, "change", () => {
-    animate(
-      scope.current,
-      { y },
-      { type: "spring", stiffness: 90, damping: 12 }
-    );
-  });
+  // useMotionValueEvent(y, "change", () => {
+  //   animate(
+  //     scope.current,
+  //     { y },
+  //     { type: "spring", stiffness: 90, damping: 12 }
+  //   );
+  // });
+  console.log(isAnimationComplete);
 
   return (
     <motion.button
       ref={scope}
-      drag={true}
-      dragElastic={0.1}
-      // dragTransition={{ power: 0.2, timeConstant: 120 }}
+      drag={isFlipped ? false : true}
+      dragElastic={0.02}
+      dragTransition={{
+        power: 0.2,
+        timeConstant: 120,
+        bounceStiffness: 600,
+        bounceDamping: 10,
+      }}
       dragMomentum={false}
       dragConstraints={{
         left: 10,
@@ -86,14 +92,14 @@ export const DeckCard = ({
         bottom: height - 400,
       }}
       className={classNames(
-        "flex flex-col items-center justify-center bg-white rounded-lg w-72 h-96 shadow-xl deck-card absolute top-0 left-0",
-        x.isAnimating() || y.isAnimating()
-          ? "cursor-grabbing"
-          : "cursor-pointer"
+        "flex flex-col items-center justify-center bg-white rounded-lg w-72 h-96 shadow-xl deck-card absolute top-0 left-0"
+        // x.isAnimating() || y.isAnimating()
+        //   ? "cursor-grabbing"
+        //   : "cursor-pointer"
       )}
       style={{
-        x: dragControls,
-        y: dragControlsY,
+        // x: dragControls,
+        // y: dragControlsY,
         zIndex: isFlipped ? 999 : "auto",
       }}
       initial={{
@@ -103,25 +109,22 @@ export const DeckCard = ({
       }}
       onMouseDown={(e) => {
         e.stopPropagation();
-        window.xyValue = { x: x.get(), y: y.get() };
+        window.xyValue = { x: dragControls.get(), y: dragControlsY.get() };
       }}
       onMouseUp={(e) => {
         e.stopPropagation();
+        console.log(dragControls.get(), dragControlsY.get());
         if (
-          Math.abs(x.get() - window.xyValue.x) < 2 ||
-          Math.abs(y.get() - window.xyValue.y) < 2
+          Math.abs(dragControls.get() - window.xyValue.x) < 2 ||
+          Math.abs(dragControlsY.get() - window.xyValue.y) < 2
         ) {
           setFlippedCardIdx(index);
         }
       }}
       onDrag={(_, info) => {
-        if (info.point.x > 200 || info.point.y > 200) {
-          dragControls.set(info.point.x);
-          dragControlsY.set(info.point.y);
-        }
+        dragControls.set(info.point.x);
+        dragControlsY.set(info.point.y);
       }}
-      onAnimationComplete={() => setIsAnimationComplete(true)}
-      onAnimationStart={() => setIsAnimationComplete(false)}
     >
       <motion.h3 className="text-lg deck-card" initial={{}}>
         {isAnimationComplete && isFlipped ? "Got you!" : "The greatest trick"}
