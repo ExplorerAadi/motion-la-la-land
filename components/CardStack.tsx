@@ -30,7 +30,7 @@ export const BaseCardsStacked = () => {
     >
       {positions.map((position, idx) => (
         <DeckCard
-          key={idx}
+          key={position.x}
           index={idx}
           position={{ x: getX(position.x), y: getY(position.y) }}
           width={width}
