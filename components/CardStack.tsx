@@ -7,7 +7,7 @@ import { CloseIcon } from "../public/icons/CloseIcon";
 
 export const BaseCardsStacked = () => {
   const { width, height } = useWindowSize();
-  const [flippedCardIdx, setFlippedCardIdx] = useState(-1);
+  const [flippedCardIdx, setFlippedCardIdx] = useState(-2);
 
   const getX = (xPercent: number) => {
     return (xPercent / 100) * width;

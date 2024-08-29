@@ -1,7 +1,7 @@
 "use client";
 
 import { motion, useAnimate, useSpring } from "framer-motion";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { classNames } from "../utils";
 
 export const DeckCard = ({
@@ -19,40 +19,41 @@ export const DeckCard = ({
   flippedCardIdx: number;
   setFlippedCardIdx: React.Dispatch<React.SetStateAction<number>>;
 }) => {
+  const [isDragging, setIsDragging] = useState(false);
   const [scope, animate] = useAnimate();
-  const x = useSpring(position.x, { stiffness: 300, damping: 30 });
-  const y = useSpring(position.y, { stiffness: 300, damping: 30 });
+  const x = useSpring(width / 2, { stiffness: 100, damping: 10 });
+  const y = useSpring(height + 100, { stiffness: 100, damping: 10 });
   const isFlipped = flippedCardIdx === index;
+  const cardWidth = 288;
+  const cardHeight = 384;
 
   useEffect(() => {
-    const animateCard = () => {
-      animate(
-        scope.current,
-        {
-          opacity: 1,
-          rotateY: isFlipped ? 180 : 0,
-          scale: isFlipped ? 1.8 : 1,
-          x: isFlipped ? width / 2 - 100 : x.get(),
-          y: isFlipped ? height / 2 - 150 : y.get(),
-        },
-        {
-          type: "spring",
-          stiffness: 90,
-        }
-      );
+    const animateCard = async () => {
+      if (flippedCardIdx === -2) {
+        x.set(position.x);
+        y.set(position.y);
+      } else if (isFlipped) {
+        x.set(width / 2 - cardWidth / 2);
+        y.set(height / 2 - cardHeight / 2);
+      }
     };
-    animate("h3", { rotateY: isFlipped ? -180 : 0 });
 
     animateCard();
+  }, [position, x, y, flippedCardIdx]);
 
-    // const unsubscribeX = x.on("change", animateCard);
-    // const unsubscribeY = y.on("change", animateCard);
+  useEffect(() => {
+    const unsubscribeX = x.on("change", (latest) => {
+      return animate(scope.current, { x: latest });
+    });
+    const unsubscribeY = y.on("change", (latest) =>
+      animate(scope.current, { y: latest })
+    );
 
-    // return () => {
-    //   unsubscribeX();
-    //   unsubscribeY();
-    // };
-  }, [isFlipped, x, y, width, height, position, animate]);
+    return () => {
+      unsubscribeX();
+      unsubscribeY();
+    };
+  }, [x, y]);
 
   return (
     <motion.button
@@ -61,23 +62,31 @@ export const DeckCard = ({
       dragElastic={0.02}
       dragMomentum={false}
       dragConstraints={{
-        left: 10,
-        right: width - 300,
-        top: 10,
-        bottom: height - 400,
+        left: 0,
+        right: width - cardWidth,
+        top: 0,
+        bottom: height - cardHeight,
       }}
-      style={{ x, y, zIndex: isFlipped ? "999" : "auto" }}
-      initial={{ opacity: 0, x: position.x, y: position.y }}
-      animate={{ opacity: 1 }}
+      transition={{ type: "spring", stiffness: 90 }}
+      style={{ x, y, top: 0, left: 0 }}
+      initial={{ opacity: 0 }}
+      animate={{
+        opacity: 1,
+        rotateY: isFlipped ? 180 : 0,
+        scale: isFlipped ? 1.8 : 1,
+        zIndex: isFlipped ? "999" : "auto",
+      }}
       onDrag={(_, info) => {
-        x.set(info.point.x);
-        y.set(info.point.y);
+        const newX = Math.max(0, Math.min(info.point.x, width - cardWidth));
+        const newY = Math.max(0, Math.min(info.point.y, height - cardHeight));
+        x.set(newX);
+        y.set(newY);
       }}
+      onDragStart={() => setIsDragging(true)}
+      onDragEnd={() => setIsDragging(false)}
       className={classNames(
         "flex flex-col items-center justify-center bg-white rounded-lg w-72 h-96 shadow-xl deck-card absolute top-0 left-0",
-        x.isAnimating() || y.isAnimating()
-          ? "cursor-grabbing"
-          : "cursor-pointer"
+        isDragging ? "cursor-grabbing" : "cursor-pointer"
       )}
       onMouseDown={(e) => {
         e.stopPropagation();
