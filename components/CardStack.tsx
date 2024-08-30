@@ -18,7 +18,7 @@ export const BaseCardsStacked = () => {
 
   return (
     <div
-      className="w-screen h-screen flex items-center justify-center bg-slate-950 overflow-hidden relative"
+      className="w-screen h-screen flex items-center justify-center bg-black overflow-hidden relative"
       onClick={(e) => {
         if (
           !(e.target as HTMLElement).classList.contains("deck-card") &&
