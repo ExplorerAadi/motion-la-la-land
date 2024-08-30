@@ -3,8 +3,7 @@
 import { motion } from "framer-motion";
 import { Card } from "../components/Card";
 import { Spotlight } from "../components/Spotlight";
-
-const cloudinaryDomain = "https://res.cloudinary.com";
+import { cloudinaryDomain } from "../utils";
 
 export const Homepage = () => {
   return (
