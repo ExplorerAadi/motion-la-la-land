@@ -5,7 +5,7 @@ import { useWindowSize } from "usehooks-ts";
 import { DeckCard } from "./DeckCard";
 import { cloudinaryDomain } from "../utils";
 
-export const BaseCardsStacked = () => {
+export const StackedDeck = () => {
   const { width, height } = useWindowSize();
   const [flippedCardIdx, setFlippedCardIdx] = useState(-2);
 

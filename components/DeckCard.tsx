@@ -28,28 +28,31 @@ export const DeckCard = ({
   setFlippedCardIdx: React.Dispatch<React.SetStateAction<number>>;
 }) => {
   const [isDragging, setIsDragging] = useState(false);
-  const x = useSpring(width / 2);
-  const y = useSpring(height + 100);
+  const x = useSpring(width / 2, { stiffness: 150, damping: 13 });
+  const y = useSpring(height + 100, { stiffness: 150, damping: 13 });
   const isFlipped = flippedCardIdx === index;
   const cardWidth = 288;
   const cardHeight = 384;
   const cardScale = Math.max(((height / cardHeight) * 80) / 100, 1);
 
   useEffect(() => {
-    const animateCard = async () => {
-      if (flippedCardIdx === -2) {
+    let timeout: NodeJS.Timeout;
+    if (flippedCardIdx === -2) {
+      timeout = setTimeout(() => {
         x.set(position.x);
         y.set(position.y);
-      } else if (isFlipped) {
-        x.set(width / 2 - cardWidth / 2);
-        y.set(height / 2 - (cardHeight / 2 - 20));
-      } else if (!isFlipped && window.cardPositions?.[index]) {
-        x.set(window.cardPositions[index].x);
-        y.set(window.cardPositions[index].y);
-      }
-    };
+      }, 200 * index);
+    } else if (isFlipped) {
+      x.set(width / 2 - cardWidth / 2);
+      y.set(height / 2 - (cardHeight / 2 - 20));
+    } else if (!isFlipped && window.cardPositions?.[index]) {
+      x.set(window.cardPositions[index].x);
+      y.set(window.cardPositions[index].y);
+    }
 
-    animateCard();
+    return () => {
+      clearTimeout(timeout);
+    };
   }, [position, flippedCardIdx, isFlipped]);
 
   return (
@@ -65,8 +68,6 @@ export const DeckCard = ({
         bottom: height - cardHeight - 20,
       }}
       transition={{
-        type: "spring",
-        stiffness: 90,
         duration: 0.4,
       }}
       style={{ x, y, top: 0, left: 0 }}
@@ -136,27 +137,27 @@ const FlippedCard = ({
   redirectLink: string;
 }) => {
   return (
-    <div className="relative flex flex-col justify-between text-gray-700 h-full w-full p-2">
+    <div className="relative flex flex-col justify-between text-gray-700 h-full w-full p-2 deck-card">
       <div className="flex flex-row items-center space-x-1">
         <div className="bg-gray-100 rounded-[5px] p-1">
           <ProjectIcon className="h-2.5" />
         </div>
-        <h5 className="text-[8px] antialiased font-semibold tracking-normal text-start">
+        <h5 className="text-[8px] antialiased font-semibold tracking-normal text-start deck-card">
           {title}
         </h5>
       </div>
       <div className="h-3/5">
         <video
-          className="h-5/6 w-full rounded-md overflow-hidden object-cover border border-gray-100"
+          className="h-5/6 w-full rounded-md overflow-hidden object-cover border border-gray-100 deck-card"
           src={media}
           autoPlay
           loop
         />
-        <p className="h-1/6 block shrink-0 text-[6px] antialiased font-normal leading-normal mt-1 text-start">
+        <p className="h-1/6 block shrink-0 text-[6px] antialiased font-normal leading-normal mt-1 text-start deck-card">
           {description}
         </p>
       </div>
-      <div className="flex w-full justify-end">
+      <div className="flex w-full justify-end deck-card">
         <VisitButton href={redirectLink} />
       </div>
     </div>

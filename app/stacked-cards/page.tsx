@@ -1,5 +1,5 @@
-import { BaseCardsStacked } from "../../components/CardStack";
+import { StackedDeck } from "../../components/CardStack";
 
 export default function StackedCardsPage() {
-  return <BaseCardsStacked />;
+  return <StackedDeck />;
 }
