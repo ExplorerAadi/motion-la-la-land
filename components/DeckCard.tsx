@@ -28,8 +28,8 @@ export const DeckCard = ({
   setFlippedCardIdx: React.Dispatch<React.SetStateAction<number>>;
 }) => {
   const [isDragging, setIsDragging] = useState(false);
-  const x = useSpring(width / 2, { stiffness: 150, damping: 13 });
-  const y = useSpring(height + 100, { stiffness: 150, damping: 13 });
+  const x = useSpring(width / 2, { damping: 20 });
+  const y = useSpring(height + 100, { damping: 20 });
   const isFlipped = flippedCardIdx === index;
   const cardWidth = 288;
   const cardHeight = 384;
