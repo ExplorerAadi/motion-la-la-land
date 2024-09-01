@@ -54,13 +54,13 @@ export const FloatingNav = ({
   }[];
   className?: string;
 }) => {
-  const { scrollYProgress } = useScroll();
+  const { scrollY } = useScroll();
 
   const [visible, setVisible] = useState(true);
 
-  useMotionValueEvent(scrollYProgress, "change", (current) => {
+  useMotionValueEvent(scrollY, "change", (current) => {
     if (typeof current === "number") {
-      const direction = current! - scrollYProgress.getPrevious()!;
+      const direction = current - scrollY.getPrevious()!;
 
       if (direction < 0) {
         setVisible(true);
@@ -86,7 +86,8 @@ export const FloatingNav = ({
           y: -40,
         }}
         transition={{
-          duration: 0.2,
+          duration: 0.4,
+          ease: [0.42, 0, 0.58, 1], // Custom cubic-bezier easing
         }}
         className={classNames(
           "flex max-w-fit fixed top-10 inset-x-0 mx-auto border border-white/[0.2] rounded-full bg-black z-[5000] px-12 py-4 items-center justify-center space-x-4",
@@ -94,16 +95,22 @@ export const FloatingNav = ({
         )}
       >
         {navItems.map((navItem: any, idx: number) => (
-          <Link
+          <motion.div
             key={`link=${idx}`}
-            href={navItem.link}
-            className={classNames(
-              "relative text-neutral-50 items-center flex space-x-1 hover:text-neutral-300"
-            )}
+            initial={{ opacity: 0, y: -10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: idx * 0.1 }} // Staggered animation
           >
-            <span className="block sm:hidden">{navItem.icon}</span>
-            <span className="hidden sm:block">{navItem.name}</span>
-          </Link>
+            <Link
+              href={navItem.link}
+              className={classNames(
+                "relative text-neutral-50 items-center flex space-x-1 hover:text-neutral-300"
+              )}
+            >
+              <span className="block sm:hidden">{navItem.icon}</span>
+              <span className="hidden sm:block">{navItem.name}</span>
+            </Link>
+          </motion.div>
         ))}
       </motion.div>
     </AnimatePresence>
