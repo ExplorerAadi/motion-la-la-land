@@ -7,7 +7,7 @@ import { cloudinaryDomain } from "../utils";
 
 export const Homepage = () => {
   return (
-    <div className="flex flex-col items-center p-4 h-full">
+    <div className="flex flex-col items-center justify-center p-4 bg-neutral-950 min-h-screen">
       <Spotlight className="-top-[10%] left-[15%] md:top-0" />
       <motion.h1
         initial={{ opacity: 0, y: 120 }}
@@ -24,10 +24,17 @@ export const Homepage = () => {
       <div className="grid lg:grid-cols-2 xl:grid-cols-3 gap-x-4 gap-y-12">
         <Card
           title="Private Island"
-          description="A private island of links and bio based on the dynamic island concept of iPhones and inspired by @konsfyi design."
+          description="A private island of links and bio based on the dynamic island concept of iPhones."
           media={`${cloudinaryDomain}/${process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME}/video/upload/f_auto:video,q_auto/private-island-demo`}
           redirectLabel="Demo"
           redirectLink="/private-island"
+        />
+        <Card
+          title="Deck of Cards"
+          description="A deck of cards that can be shuffled using the mouse and flipped to reveal projects."
+          media={`${cloudinaryDomain}/${process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME}/video/upload/f_auto:video,q_auto/card-deck`}
+          redirectLabel="Demo"
+          redirectLink="/stacked-cards"
         />
         <Card
           title="Art Gallery"
@@ -39,7 +46,7 @@ export const Homepage = () => {
         <Card
           title="Smart Navbar"
           description="Stick the heading of the section in viewport to the top, super helpful when reading a blog post or a long article."
-          media={`${cloudinaryDomain}/${process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME}/video/upload/v1717143294/smart-navbar.mp4`}
+          media={`${cloudinaryDomain}/${process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME}/video/upload/v1717143294/smart-navbar-demo.mp4`}
           redirectLabel="Demo"
           redirectLink="/smart-navbar"
         />
