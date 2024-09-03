@@ -4,63 +4,225 @@ import {
   useScroll,
   motion,
   useTransform,
-  useMotionValueEvent,
+  useSpring,
+  useVelocity,
+  useMotionValue,
 } from "framer-motion";
-import { useRef } from "react";
-
-const images = ["/image_1.jpg", "/image_2.jpg", "/image_3.png", "/image_4.jpg"];
+import { useEffect, useRef } from "react";
 
 export default function ScrollEffectPage() {
-  const { scrollY } = useScroll();
   const containerRef = useRef<HTMLDivElement>(null);
+  const scrollY = useMotionValue(0);
+  const scrollProgress = useMotionValue(0);
 
-  useMotionValueEvent(scrollY, "change", (latest) => {
-    console.log(latest);
+  useEffect(() => {
+    const handleScroll = () => {
+      if (containerRef.current) {
+        const { scrollTop, scrollHeight, clientHeight } = containerRef.current;
+        scrollY.set(scrollTop);
+        scrollProgress.set(scrollTop / (scrollHeight - clientHeight));
+      }
+    };
+
+    const container = containerRef.current;
+    if (container) {
+      container.addEventListener("scroll", handleScroll);
+    }
+
+    return () => {
+      if (container) {
+        container.removeEventListener("scroll", handleScroll);
+      }
+    };
+  }, [scrollY, scrollProgress]);
+
+  const smoothProgress = useSpring(scrollProgress, {
+    damping: 15,
+    stiffness: 100,
   });
 
+  const scale = useTransform(smoothProgress, [0, 0.5, 1], [1, 0.95, 1]);
+  const rotateX = useTransform(smoothProgress, [0, 0.5, 1], [0, 5, 0]);
+  const opacity = useTransform(smoothProgress, [0, 0.5, 1], [1, 0.8, 1]);
+
   return (
-    <div ref={containerRef} className="relative">
-      {images.map((src, index) => (
-        <motion.div
-          key={index}
-          className="h-screen w-full overflow-hidden"
-          style={{
-            scale: useTransform(scrollY, (value) => {
-              const container = containerRef.current;
-              if (!container) return 1;
+    <div
+      ref={containerRef}
+      className="h-screen overflow-y-scroll"
+      style={{ perspective: "1000px" }}
+    >
+      <motion.div
+        className="relative"
+        style={{
+          scale,
+          rotateX,
+          opacity,
+          transformOrigin: "center center",
+        }}
+      >
+        <div className="flex px-8 py-4">
+          <div className="w-1/5">
+            <ul>
+              {categories.map((category) => (
+                <li
+                  key={category}
+                  className="mb-2 text-gray-600 hover:text-black cursor-pointer"
+                >
+                  {category}
+                </li>
+              ))}
+            </ul>
+          </div>
 
-              const containerHeight = container.offsetHeight;
-              const windowHeight = window.innerHeight;
-              const imageElement = container.children[index] as HTMLElement;
-              if (!imageElement) return 1;
-
-              const imageTop = imageElement.offsetTop;
-              const imageHeight = imageElement.offsetHeight;
-              const imageCenter = imageTop + imageHeight / 2;
-
-              const distanceFromCenter = Math.abs(
-                value + windowHeight / 2 - imageCenter
-              );
-              const maxDistance = containerHeight / 2;
-
-              return (
-                1 + (1 - Math.min(distanceFromCenter / maxDistance, 1)) * 0.5
-              );
-            }),
-          }}
-        >
-          <img
-            src={src}
-            alt={`Image ${index + 1}`}
-            className="w-full h-full object-cover"
-          />
-        </motion.div>
-      ))}
+          <div className="w-4/5 grid grid-cols-2 gap-8">
+            {projects.map((project, index) => (
+              <div key={index} className="mb-8">
+                <img
+                  src={project.image}
+                  alt={project.title}
+                  className="w-full h-64 object-cover mb-2"
+                />
+                <div className="text-xs text-gray-500 mb-1">
+                  {project.categories.join(" • ")}
+                </div>
+                <h3 className="text-lg font-bold">{project.title}</h3>
+                {project.subtitle && (
+                  <p className="text-sm">{project.subtitle}</p>
+                )}
+              </div>
+            ))}
+          </div>
+        </div>
+      </motion.div>
     </div>
   );
 }
 
-// Result - A certain parallax/scale effect on the page tied to velocity as you scroll down.
-// Barebone implemention - Some scale effect happens on the page as you scroll down and depends on scroll velocity.
+const categories = [
+  "ALL",
+  "LIVING ROOM",
+  "KITCHEN",
+  "BEDROOM",
+  "BATHROOM",
+  "DINING ROOM",
+  "HOME OFFICE",
+  "OUTDOOR SPACES",
+];
 
-// Result after 30 mins attempt - Some working version of the barebone implemention but need to tie the animation with scroll velocity betters̱.
+interface Project {
+  image: string;
+  title: string;
+  subtitle: string;
+  categories: string[];
+}
+
+const projects: Project[] = [
+  {
+    image: "/home_img_1.jpg",
+    title: "Cozy Bedroom Retreat",
+    subtitle: "Tranquil Sleep Space",
+    categories: ["BEDROOM"],
+  },
+  {
+    image: "/home_img_2.jpg",
+    title: "Cozy Living Room Design",
+    subtitle: "Modern Comfort",
+    categories: ["LIVING ROOM"],
+  },
+  {
+    image: "/home_img_3.jpg",
+    title: "Luxurious Living Room",
+    subtitle: "Elegant Comfort",
+    categories: ["LIVING ROOM"],
+  },
+  {
+    image: "/home_img_4.jpg",
+    title: "Elegant Drawing Room",
+    subtitle: "Classic Sophistication",
+    categories: ["LIVING ROOM"],
+  },
+  {
+    image: "/home_img_5.jpg",
+    title: "Cozy Bedroom",
+    subtitle: "Relaxing Retreat",
+    categories: ["BEDROOM"],
+  },
+  {
+    image: "/home_img_6.jpg",
+    title: "Elegant Drawing Room",
+    subtitle: "Classic Sophistication",
+    categories: ["LIVING ROOM"],
+  },
+  {
+    image: "/home_img_1.jpg",
+    title: "Cozy Bedroom Retreat",
+    subtitle: "Tranquil Sleep Space",
+    categories: ["BEDROOM"],
+  },
+  {
+    image: "/home_img_2.jpg",
+    title: "Cozy Living Room Design",
+    subtitle: "Modern Comfort",
+    categories: ["LIVING ROOM"],
+  },
+  {
+    image: "/home_img_3.jpg",
+    title: "Luxurious Living Room",
+    subtitle: "Elegant Comfort",
+    categories: ["LIVING ROOM"],
+  },
+  {
+    image: "/home_img_4.jpg",
+    title: "Elegant Drawing Room",
+    subtitle: "Classic Sophistication",
+    categories: ["LIVING ROOM"],
+  },
+  {
+    image: "/home_img_5.jpg",
+    title: "Cozy Bedroom",
+    subtitle: "Relaxing Retreat",
+    categories: ["BEDROOM"],
+  },
+  {
+    image: "/home_img_6.jpg",
+    title: "Elegant Drawing Room",
+    subtitle: "Classic Sophistication",
+    categories: ["LIVING ROOM"],
+  },
+  {
+    image: "/home_img_1.jpg",
+    title: "Cozy Bedroom Retreat",
+    subtitle: "Tranquil Sleep Space",
+    categories: ["BEDROOM"],
+  },
+  {
+    image: "/home_img_2.jpg",
+    title: "Cozy Living Room Design",
+    subtitle: "Modern Comfort",
+    categories: ["LIVING ROOM"],
+  },
+  {
+    image: "/home_img_3.jpg",
+    title: "Luxurious Living Room",
+    subtitle: "Elegant Comfort",
+    categories: ["LIVING ROOM"],
+  },
+  {
+    image: "/home_img_4.jpg",
+    title: "Elegant Drawing Room",
+    subtitle: "Classic Sophistication",
+    categories: ["LIVING ROOM"],
+  },
+  {
+    image: "/home_img_5.jpg",
+    title: "Cozy Bedroom",
+    subtitle: "Relaxing Retreat",
+    categories: ["BEDROOM"],
+  },
+  {
+    image: "/home_img_6.jpg",
+    title: "Elegant Drawing Room",
+    subtitle: "Classic Sophistication",
+    categories: ["LIVING ROOM"],
+  },
+];
