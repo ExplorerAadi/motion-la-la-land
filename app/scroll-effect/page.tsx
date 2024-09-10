@@ -1,113 +1,70 @@
 "use client";
 
-import {
-  useScroll,
-  motion,
-  useTransform,
-  useSpring,
-  useVelocity,
-  useMotionValue,
-} from "framer-motion";
-import { useEffect, useRef } from "react";
+import { motion, useTransform, useSpring, useScroll } from "framer-motion";
+import { useEffect, useRef, useState } from "react";
 
 export default function ScrollEffectPage() {
   const containerRef = useRef<HTMLDivElement>(null);
-  const scrollY = useMotionValue(0);
-  const scrollProgress = useMotionValue(0);
+  const [contentHeight, setContentHeight] = useState(0);
+  const [windowHeight, setWindowHeight] = useState(0);
 
   useEffect(() => {
-    const handleScroll = () => {
+    const handleResize = () => {
       if (containerRef.current) {
-        const { scrollTop, scrollHeight, clientHeight } = containerRef.current;
-        scrollY.set(scrollTop);
-        scrollProgress.set(scrollTop / (scrollHeight - clientHeight));
+        setContentHeight(containerRef.current.scrollHeight);
       }
+      setWindowHeight(window.innerHeight);
     };
 
-    const container = containerRef.current;
-    if (container) {
-      container.addEventListener("scroll", handleScroll);
-    }
+    handleResize();
+
+    window.addEventListener("resize", handleResize);
 
     return () => {
-      if (container) {
-        container.removeEventListener("scroll", handleScroll);
-      }
+      window.removeEventListener("resize", handleResize);
     };
-  }, [scrollY, scrollProgress]);
+  }, []);
 
-  const smoothProgress = useSpring(scrollProgress, {
-    damping: 15,
-    stiffness: 100,
+  const { scrollYProgress } = useScroll();
+
+  const smoothProgress = useSpring(scrollYProgress, {
+    damping: scrollYProgress.getVelocity() > 0.2 ? 25 : 40,
+    stiffness: scrollYProgress.getVelocity() > 0.2 ? 200 : 100,
   });
 
-  const scale = useTransform(smoothProgress, [0, 0.5, 1], [1, 0.95, 1]);
-  const rotateX = useTransform(smoothProgress, [0, 0.5, 1], [0, 5, 0]);
-  const opacity = useTransform(smoothProgress, [0, 0.5, 1], [1, 0.8, 1]);
+  const translateY = useTransform(
+    smoothProgress,
+    (value) => value * -(contentHeight - windowHeight)
+  );
 
   return (
-    <div
-      ref={containerRef}
-      className="h-screen overflow-y-scroll"
-      style={{ perspective: "1000px" }}
-    >
+    <div className="w-full" ref={containerRef}>
       <motion.div
-        className="relative"
-        style={{
-          scale,
-          rotateX,
-          opacity,
-          transformOrigin: "center center",
-        }}
+        className="flex h-full mx-auto p-4 max-w-6xl"
+        style={{ y: contentHeight ? translateY : 0 }}
       >
-        <div className="flex px-8 py-4">
-          <div className="w-1/5">
-            <ul>
-              {categories.map((category) => (
-                <li
-                  key={category}
-                  className="mb-2 text-gray-600 hover:text-black cursor-pointer"
-                >
-                  {category}
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          <div className="w-4/5 grid grid-cols-2 gap-8">
-            {projects.map((project, index) => (
-              <div key={index} className="mb-8">
-                <img
-                  src={project.image}
-                  alt={project.title}
-                  className="w-full h-64 object-cover mb-2"
-                />
-                <div className="text-xs text-gray-500 mb-1">
-                  {project.categories.join(" • ")}
-                </div>
-                <h3 className="text-lg font-bold">{project.title}</h3>
-                {project.subtitle && (
-                  <p className="text-sm">{project.subtitle}</p>
-                )}
+        <div className="w-full grid grid-cols-2 gap-8">
+          {projects.map((project, index) => (
+            <motion.div key={index} className="mb-8">
+              <img
+                src={project.image}
+                alt={project.title}
+                className="w-full h-64 object-cover mb-2"
+              />
+              <div className="text-xs text-gray-500 mb-1">
+                {project.categories.join(" • ")}
               </div>
-            ))}
-          </div>
+              <h3 className="text-lg font-bold">{project.title}</h3>
+              {project.subtitle && (
+                <p className="text-sm">{project.subtitle}</p>
+              )}
+            </motion.div>
+          ))}
         </div>
       </motion.div>
     </div>
   );
 }
-
-const categories = [
-  "ALL",
-  "LIVING ROOM",
-  "KITCHEN",
-  "BEDROOM",
-  "BATHROOM",
-  "DINING ROOM",
-  "HOME OFFICE",
-  "OUTDOOR SPACES",
-];
 
 interface Project {
   image: string;
