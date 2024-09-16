@@ -223,7 +223,7 @@ const ExpandedStageThree = ({
                 setExpandedStage(EXPANDED_STATE.EXPANDED_1);
             }}
           >
-            {link.icon()}
+            <motion.div layout="position">{link.icon()}</motion.div>
             {/* <AnimatePresence> */}
             {hoveredIndex === index && (
               <>

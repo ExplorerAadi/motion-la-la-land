@@ -12,15 +12,9 @@ const CTAMorphEffect = () => {
         <div className="absolute inset-0 z-10 flex h-full w-full items-center justify-center">
           <div className="w-32 flex items-center justify-end">
             <div></div>
-            <motion.div
-              style={{ direction: "rtl" }}
-              initial={{ width: 54 }}
-              //   animate={{
-              //     width: isHovered ? 93.37 : 54,
-              //   }}
-            >
+            <motion.div style={{ direction: "rtl" }}>
               <motion.button
-                className="text-white text-xl px-4 h-10 border flex items-center justify-center w-full shrink-0 min-w-fit"
+                className="text-white text-xl p-4 h-10 border flex items-center justify-center w-full shrink-0 min-w-fit"
                 style={{ borderRadius: "999px" }}
                 onMouseEnter={() => setIsHovered(true)}
                 onMouseLeave={() => setIsHovered(false)}
@@ -28,17 +22,22 @@ const CTAMorphEffect = () => {
                 animate={{
                   backgroundColor: isHovered ? "#fff" : "#000",
                   color: isHovered ? "#000" : "#fff",
+                  width: isHovered ? 93.37 : 54,
                 }}
               >
-                <motion.div className="h-5 w-5">
+                <motion.div layout="position" className="h-5 w-5">
                   <AddIcon />
                 </motion.div>
                 <AnimatePresence>
                   {isHovered && (
                     <motion.div
+                      layout="position"
                       className="text-md pr-1"
-                      initial={{ x: 0, opacity: 0 }}
-                      animate={{ x: 0, opacity: 1 }}
+                      initial={{ x: 10, opacity: 0 }}
+                      animate={{
+                        x: 0,
+                        opacity: 1,
+                      }}
                       exit={{ opacity: 0 }}
                     >
                       Add
