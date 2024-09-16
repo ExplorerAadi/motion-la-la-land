@@ -7,10 +7,10 @@ import { AnimatePresence, motion, MotionConfig } from "framer-motion";
 const CTAMorphEffect = () => {
   const [isHovered, setIsHovered] = useState(false);
   return (
-    <MotionConfig transition={{ duration: 0.2 }}>
+    <MotionConfig transition={{ duration: 0.4 }}>
       <div className="relative h-screen w-full bg-black">
         <div className="absolute inset-0 z-10 flex h-full w-full items-center justify-center">
-          <div className="w-32 flex items-center justify-end">
+          <div className="w-24 flex items-center justify-end">
             <div></div>
             <motion.div style={{ direction: "rtl" }}>
               <motion.button
@@ -29,19 +29,17 @@ const CTAMorphEffect = () => {
                   <AddIcon />
                 </motion.div>
                 <AnimatePresence>
-                  {isHovered && (
+                  {isHovered ? (
                     <motion.div
                       layout="position"
                       className="text-md pr-1"
-                      initial={{ x: 10, opacity: 0 }}
-                      animate={{
-                        x: 0,
-                        opacity: 1,
-                      }}
-                      exit={{ opacity: 0 }}
+                      initial={{ opacity: 0 }}
+                      animate={{ opacity: 1, transition: { delay: 0.2 } }}
                     >
                       Add
                     </motion.div>
+                  ) : (
+                    <div />
                   )}
                 </AnimatePresence>
               </motion.button>
@@ -54,39 +52,3 @@ const CTAMorphEffect = () => {
 };
 
 export default CTAMorphEffect;
-
-// Trial #1
-{
-  /* <div className="relative h-screen w-full bg-black">
-      <motion.div
-        className="absolute inset-0 z-10 flex h-full w-full items-center justify-center"
-        initial={{ opacity: 1 }}
-        animate={{
-          transition: { duration: 0.3 },
-        }}
-      >
-        {isHovered ? (
-          <motion.button
-            className="text-white text-xl px-8 py-3 border flex items-center justify-center"
-            style={{ borderRadius: "999px" }}
-            onMouseEnter={() => setIsHovered(true)}
-            onMouseLeave={() => setIsHovered(false)}
-            layoutId="add-icon"
-          >
-            <p>Add</p>
-            <AddIcon className="w-6 h-6" />
-          </motion.button>
-        ) : (
-          <motion.button
-            className="text-white text-xl p-3 border flex items-center justify-center"
-            style={{ borderRadius: "999px" }}
-            onMouseEnter={() => setIsHovered(true)}
-            onMouseLeave={() => setIsHovered(false)}
-            layoutId="add-icon"
-          >
-            <AddIcon className="w-6 h-6" />
-          </motion.button>
-        )}
-      </motion.div>
-    </div> */
-}
