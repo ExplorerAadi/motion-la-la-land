@@ -84,14 +84,14 @@ export const DeckCard = ({
         "flex flex-col items-center justify-center bg-white rounded-lg w-72 h-96 shadow-xl deck-card absolute top-0 left-0",
         isDragging ? "cursor-grabbing" : "cursor-pointer"
       )}
-      onMouseDown={(e) => {
+      onMouseDown={(e: React.MouseEvent<HTMLButtonElement>) => {
         e.stopPropagation();
         window.cardPositions = {
           ...window.cardPositions,
           [index]: { x: x.get(), y: y.get() },
         };
       }}
-      onMouseUp={(e) => {
+      onMouseUp={(e: React.MouseEvent<HTMLButtonElement>) => {
         e.stopPropagation();
         if (
           Math.abs(x.get() - window.cardPositions[index].x) < 2 ||
