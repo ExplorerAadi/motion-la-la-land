@@ -25,35 +25,35 @@ export const Homepage = () => {
         <Card
           title="Private Island"
           description="A private island of links and bio based on the dynamic island concept of iPhones."
-          media={"/Private Island Demo.mp4"}
+          media="https://pub-84559be953a840e39a097eff253d654a.r2.dev/private-island-demo.mp4"
           redirectLabel="Demo"
           redirectLink="/private-island"
         />
         <Card
           title="Deck of Cards"
           description="A deck of cards that can be shuffled using the mouse and flipped to reveal projects."
-          media={"/Card Deck Video.mp4"}
+          media="https://pub-84559be953a840e39a097eff253d654a.r2.dev/card-deck.mp4"
           redirectLabel="Demo"
           redirectLink="/stacked-cards"
         />
         <Card
           title="Art Gallery"
           description="An art gallery with images arranged in a masonry grid and an iPhone like opening closing animation."
-          media={"/Art Gallery.mp4"}
+          media="https://pub-84559be953a840e39a097eff253d654a.r2.dev/art-gallery-demo.mp4"
           redirectLabel="Demo"
           redirectLink="/modal-animation"
         />
         <Card
           title="Smart Navbar"
           description="Stick the heading of the section in viewport to the top, super helpful when reading a blog post or a long article."
-          media={"/Smart Navbar Demo.mp4"}
+          media="https://pub-84559be953a840e39a097eff253d654a.r2.dev/sticky-nav.mp4"
           redirectLabel="Demo"
           redirectLink="/smart-navbar"
         />
         <Card
           title="Menu Interaction"
           description="A hamburger menu created by only animating the svg paths and can be used to toggle the open/close state of sidebar menus."
-          media={"/Menu SVG.mp4"}
+          media="https://pub-84559be953a840e39a097eff253d654a.r2.dev/menu-interaction.mp4"
           redirectLabel="Demo"
           redirectLink="/menu-animation"
         />
@@ -67,7 +67,7 @@ export const Homepage = () => {
         <Card
           title="Mask Image Effect"
           description="Hiding a text/image behind the content being shown on the screen that can be revealed in multiple ways, here I am using mouse hover."
-          media={"/Mouse Tracking Video.mp4"}
+          media="https://pub-84559be953a840e39a097eff253d654a.r2.dev/mask-image.mp4"
           redirectLabel="Demo"
           redirectLink="/mask-image-effect"
         />
