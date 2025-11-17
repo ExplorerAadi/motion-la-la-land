@@ -44,11 +44,11 @@ export const ImageRevealOnHover = () => {
         onHoverStart={() => !size && animate(maskSize, 80)}
         onHoverEnd={() => !size && animate(maskSize, 0)}
         onPointerDown={() => !size && animate(maskSize, 40)}
-        onClick={(e) => setSize(e.currentTarget.getBoundingClientRect())}
-        onPointerMove={(e) => {
+        onClick={(e: any) => setSize(e.currentTarget.getBoundingClientRect())}
+        onPointerMove={(e: React.PointerEvent<HTMLDivElement>) => {
           if (size) return;
           const { top, left } = (
-            e.currentTarget as any
+            e.currentTarget
           ).getBoundingClientRect();
           maskX.set(e.clientX - left);
           maskY.set(e.clientY - top);
